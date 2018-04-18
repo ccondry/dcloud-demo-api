@@ -8,7 +8,7 @@ app.use(cors())
 app.use(bodyParser.json({limit: '5kb'}))
 
 app.post('/', async (req, res, next) => {
-  // post the incoming answers to the database
+  // example data
   // const data = {
   //   surveyId: 'SPARKY001',
   //   ani: '1234567890',
@@ -16,8 +16,14 @@ app.post('/', async (req, res, next) => {
   //   q1: '4',
   //   q2: '5',
   // }
-  await sql.saveAnswers(req.body)
-  return res.status(201).send()
+  try {
+    // post the incoming answers to the database
+    const rows = await sql.saveAnswers(req.body)
+    // accepted
+    return res.status(201).send({rows})
+  } catch (e) {
+    return res.status(500).send(e)
+  }
 })
 
 // log 404
