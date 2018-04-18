@@ -17,11 +17,14 @@ app.post('/api/v1/survey', async (req, res, next) => {
   //   q2: '5',
   // }
   try {
+    console.log('request to save survey answers:', req.body)
     // post the incoming answers to the database
     const rows = await sql.saveAnswers(req.body)
+    console.log('successfully saved survey answers')
     // accepted
     return res.status(201).send({rows})
   } catch (e) {
+    console.error('failed to save survey answers', e)
     return res.status(500).send(e)
   }
 })
