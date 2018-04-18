@@ -7,7 +7,7 @@ require('dotenv').load()
 app.use(cors())
 app.use(bodyParser.json({limit: '5kb'}))
 
-app.post('/', async (req, res, next) => {
+app.post('/api/v1/survey', async (req, res, next) => {
   // example data
   // const data = {
   //   surveyId: 'SPARKY001',
