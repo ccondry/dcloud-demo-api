@@ -1,0 +1,29 @@
+{
+  "name": "survey-answers-api",
+  "version": "0.1.0",
+  "description": "dCloud Contact Center demo API to save chat survey answers to survey database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/dcloud-collab/survey-answers-api.git"
+  },
+  "keywords": [
+    "dcloud",
+    "cisco",
+    "survey",
+    "collab",
+    "contact",
+    "center",
+    "pcce",
+    "uccx"
+  ],
+  "author": "Coty Condry <ccondry@cisco.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://gitlab.com/dcloud-collab/survey-answers-api/issues"
+  },
+  "homepage": "https://gitlab.com/dcloud-collab/survey-answers-api#README"
+}
