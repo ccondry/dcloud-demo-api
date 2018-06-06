@@ -2,8 +2,9 @@
   "name": "survey-answers-api",
   "version": "0.1.0",
   "description": "dCloud Contact Center demo API to save chat survey answers to survey database",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "start": "node src/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
