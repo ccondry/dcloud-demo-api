@@ -1,16 +1,19 @@
 const app = require('express')()
 const cors = require('cors')
-const sql = require('./sql')
 const bodyParser = require('body-parser')
 require('dotenv').load()
 
 app.use(cors())
 app.use(bodyParser.json({limit: '5kb'}))
 
-// chat survey answers
+// dcloud session info
+app.use('/api/v1/session', require('./routes/session'))
+// add chat survey answers to db
 app.use('/api/v1/survey', require('./routes/survey'))
 // context service
 app.use('/api/v1/cs', require('./routes/cs'))
+// send email service
+app.use('/api/v1/email', require('./routes/email'))
 
 // log 404
 app.use((req, res, next) => {

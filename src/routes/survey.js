@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const model = require('../models/survey')
 
 // save survey answers to survey database
 router.post('/', async (req, res, next) => {
@@ -14,7 +15,7 @@ router.post('/', async (req, res, next) => {
   try {
     console.log('request to save survey answers:', req.body)
     // post the incoming answers to the database
-    const rows = await sql.saveAnswers(req.body)
+    const rows = await model.saveAnswers(req.body)
     console.log('successfully saved survey answers')
     // accepted
     return res.status(201).send({rows})
