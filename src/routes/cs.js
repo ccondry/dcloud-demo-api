@@ -46,7 +46,9 @@ async function getCustomer (query) {
       try {
         customers = await request({
           url: `${process.env.CS_REST_HOST_2}/customer`,
-          qs,
+          qs: {
+            q: query
+          },
           json: true
         })
       } catch (e2) {
@@ -57,7 +59,7 @@ async function getCustomer (query) {
 
     // find CS customer
     switch (customers.length) {
-      case 0: throw `no customers found matching ${JSON.stringify(qs)}`
+      case 0: throw `no customers found matching ${query}`
       case 1: {
         // one customer - continue to default for now
       }
