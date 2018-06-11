@@ -4,7 +4,7 @@ const request = require('request-promise-native')
 
 // filter items less than 5 days old
 function lessThanFiveDaysOld (v) {
-  const created = new Date(v.created)
+  const created = new Date(v.lastUpdated)
   const now = new Date()
   const diff = now - created
   // if created more than 5 days ago
