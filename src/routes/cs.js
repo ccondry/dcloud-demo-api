@@ -32,13 +32,30 @@ function byCreated (a, b) {
 async function getCustomer (queryString) {
   try {
     // find customer
-    const customers = await request({
-      url: `${process.env.CS_REST_HOST}/org/${process.env.CS_ORG_ID}/customer`,
-      qs: {
-        q: `query_string:${queryString}`
-      },
-      json: true
-    })
+    let customers
+    try {
+      customers = await request({
+        url: `${process.env.CS_REST_HOST_1}/customer`,
+        qs: {
+          q: `query_string:${queryString}`
+        },
+        json: true
+      })
+    } catch (e) {
+      console.log('failed to search for customer on cs-manager-1. trying cs-manager-2...')
+      try {
+        customers = await request({
+          url: `${process.env.CS_REST_HOST_2}/customer`,
+          qs: {
+            q: `query_string:${queryString}`
+          },
+          json: true
+        })
+      } catch (e2) {
+        console.log('failed to search for customer on cs-manager-2. throwing error.')
+        throw e2
+      }
+    }
 
     // find CS customer
     switch (customers.length) {
@@ -56,20 +73,38 @@ async function getCustomer (queryString) {
       }
     }
   } catch (e) {
-     throw e
+    throw e
   }
 }
 
-async function getRequest (customerId) {
+async function getRequest (customer) {
   try {
     // find recent CS request objects
-    const requests = await request({
-      url: `${process.env.CS_REST_HOST}/org/${process.env.CS_ORG_ID}/request`,
-      qs: {
-        q: `customerId:${customerId}`
-      },
-      json: true
-    })
+    let requests
+    try {
+      requests = await request({
+        url: `${process.env.CS_REST_HOST_1}/request`,
+        qs: {
+          q: `customerId:${customer.id}`
+        },
+        json: true
+      })
+    } catch (e) {
+      console.log('failed to search for request on cs-manager-1. trying cs-manager-2...')
+      try {
+        requests = await request({
+          url: `${process.env.CS_REST_HOST_2}/request`,
+          qs: {
+            q: `customerId:${customer.id}`
+          },
+          json: true
+        })
+      } catch (e2) {
+        console.log('failed to search for request on cs-manager-2. throwing error.')
+        throw e2
+      }
+    }
+
 
     const latestRequest = requests.filter(lessThanFiveDaysOld).sort(byCreated)[0]
     if (latestRequest) {
@@ -79,20 +114,45 @@ async function getRequest (customerId) {
     } else {
       console.log('no recent requests. creating new CS request object...')
       // create new request
-      return await request({
-        url: `${process.env.CS_REST_HOST}/org/${process.env.CS_ORG_ID}/request`,
-        method: 'POST',
-        json: true,
-        body: {
-          "type": "request",
-          "state": "active",
-          "customerRefUrl": `/context/v1/customer/${customerId}`,
-          "fieldsets": [
-            "cisco.base.request"
-          ],
-          "dataElements": []
+      let ret
+      try {
+        ret = await request({
+          url: `${process.env.CS_REST_HOST_1}/request`,
+          method: 'POST',
+          json: true,
+          body: {
+            "type": "request",
+            "state": "active",
+            "customerRefUrl": customer.refUrl,
+            "fieldsets": [
+              "cisco.base.request"
+            ],
+            "dataElements": []
+          }
+        })
+      } catch (e) {
+        console.log('failed to create request on cs-manager-1. trying cs-manager-2...')
+        try {
+          ret = await request({
+            url: `${process.env.CS_REST_HOST_2}/request`,
+            method: 'POST',
+            json: true,
+            body: {
+              "type": "request",
+              "state": "active",
+              "customerRefUrl": customer.refUrl,
+              "fieldsets": [
+                "cisco.base.request"
+              ],
+              "dataElements": []
+            }
+          })
+        } catch (e2) {
+          console.log('failed to create request on cs-manager-2. throwing error.')
+          throw e2
         }
-      })
+      }
+      return ret
     }
   } catch (e) {
     throw e
@@ -106,19 +166,37 @@ async function sendTranscript (query, body) {
     // find customer
     const customer = await getCustomer(query)
     // get a current request object
-    const rq = await getRequest(customer.id)
+    const rq = await getRequest(customer)
 
     // set customer ID and request ID
-    body.customerRefUrl = `/context/v1/customer/${customer.id}`
-    body.parentRefUrl = `/context/v1/request/${rq.id}`
+    body.customerRefUrl = customer.refUrl
+    body.parentRefUrl = rq.refUrl
 
     // create transcript activity
-    const activity = await request({
-      url: `${process.env.CS_REST_HOST}/org/${process.env.CS_ORG_ID}/activity`,
-      method: 'POST',
-      body,
-      json: true
-    })
+    let activity
+
+
+    try {
+      activity = await request({
+        url: `${process.env.CS_REST_HOST_1}/activity`,
+        method: 'POST',
+        body,
+        json: true
+      })
+    } catch (e) {
+      console.log('failed to create activity on cs-manager-1. trying cs-manager-2...')
+      try {
+        activity = await request({
+          url: `${process.env.CS_REST_HOST_2}/activity`,
+          method: 'POST',
+          body,
+          json: true
+        })
+      } catch (e2) {
+        console.log('failed to create activity on cs-manager-2. throwing error.')
+        throw e2
+      }
+    }
 
     console.log(`successfully created Context Service transcript activity for ${query}`)
   } catch (e) {
