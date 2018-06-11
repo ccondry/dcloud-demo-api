@@ -29,14 +29,16 @@ function byCreated (a, b) {
   return 0
 }
 
-async function getCustomer (qs) {
+async function getCustomer (query) {
   try {
     // find customer
     let customers
     try {
       customers = await request({
         url: `${process.env.CS_REST_HOST_1}/customer`,
-        qs,
+        qs: {
+          q: query
+        },
         json: true
       })
     } catch (e) {
@@ -205,7 +207,7 @@ async function sendTranscript (query, body) {
 router.post('/transcript', async (req, res, next) => {
   try {
     console.log('request to save chat transcript:', req.body)
-    const response = await sendTranscript(req.query, req.body)
+    const response = await sendTranscript(req.query.q, req.body)
     console.log('successfully saved chat transcript')
     return res.status(201).send(response)
   } catch (e) {
