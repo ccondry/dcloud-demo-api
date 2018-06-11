@@ -183,7 +183,7 @@ async function sendTranscript (query, body) {
         body,
         json: true
       })
-    } catch (e) {
+    } catch (e2) {
       console.log('failed to create activity on cs-manager-1. trying cs-manager-2...')
       try {
         activity = await request({
@@ -192,9 +192,9 @@ async function sendTranscript (query, body) {
           body,
           json: true
         })
-      } catch (e2) {
+      } catch (e3) {
         console.log('failed to create activity on cs-manager-2. throwing error.')
-        throw e2
+        throw e3
       }
     }
 
