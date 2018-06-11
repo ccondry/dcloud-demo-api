@@ -29,16 +29,14 @@ function byCreated (a, b) {
   return 0
 }
 
-async function getCustomer (queryString) {
+async function getCustomer (qs) {
   try {
     // find customer
     let customers
     try {
       customers = await request({
         url: `${process.env.CS_REST_HOST_1}/customer`,
-        qs: {
-          q: `query_string:${queryString}`
-        },
+        qs,
         json: true
       })
     } catch (e) {
@@ -46,9 +44,7 @@ async function getCustomer (queryString) {
       try {
         customers = await request({
           url: `${process.env.CS_REST_HOST_2}/customer`,
-          qs: {
-            q: `query_string:${queryString}`
-          },
+          qs,
           json: true
         })
       } catch (e2) {
@@ -59,7 +55,7 @@ async function getCustomer (queryString) {
 
     // find CS customer
     switch (customers.length) {
-      case 0: throw `no customers found matching ${queryString}`
+      case 0: throw `no customers found matching ${JSON.stringify(qs)}`
       case 1: {
         // one customer - continue to default for now
       }
