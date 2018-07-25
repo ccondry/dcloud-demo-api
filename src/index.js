@@ -14,6 +14,8 @@ app.use('/api/v1/survey', require('./routes/survey'))
 app.use('/api/v1/cs', require('./routes/cs'))
 // send email service
 app.use('/api/v1/email', require('./routes/email'))
+// start uccx callback
+app.use('/api/v1/callback', require('./routes/callback'))
 
 // log 404
 app.use((req, res, next) => {
