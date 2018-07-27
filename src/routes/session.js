@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const fs = require('fs')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -7,11 +8,13 @@ router.get('/', async (req, res, next) => {
 
     // read the dcloud session file and return the contents
     fs.readFile('/dcloud/session.xml', function (err, data) {
-      if (err) throw err
+      if (err) {
+        throw err
+      }
 
       // parse xml to json object
       const json = JSON.parse(parser.toJson(data))
-
+      
       // return data
       return res.status(200).send(json.session)
     })
