@@ -5,12 +5,8 @@ const configure = require('../models/configure')
 router.get('/', async (req, res, next) => {
   try {
     console.log('request to configure demo')
-    // read the dcloud session.xml file
-    const xml = await readFile('/dcloud/session.xml')
-    // parse session.xml to json object
-    const json = await parseString(xml)
     // patch session on mm and mm-dev
-    const values = await configure(result.datacenter, result.id, req.query)
+    const values = await configure(req.query)
     // log results
     const primarySuccess = values[0] instanceof Error
     const secondarySuccess = values[1] instanceof Error

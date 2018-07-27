@@ -6,7 +6,7 @@ const util = require('util')
 const readFile = util.promisify(fs.readFile)
 const parseString = util.promisify(xml2js.parseString)
 
-async function go (datacenter, id, body) {
+async function go (body) {
   console.log('running: update dcloud session configuration')
   try {
     // read the dcloud session.xml file
@@ -17,7 +17,7 @@ async function go (datacenter, id, body) {
     // REST method
     const method = 'PATCH'
     // url path
-    const path = `/api/v1/datacenters/${datacenter}/sessions/${id}`
+    const path = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
 
     // patch session on mm
     const p1 = request({
