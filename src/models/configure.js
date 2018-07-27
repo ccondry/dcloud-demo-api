@@ -51,10 +51,10 @@ async function go (body) {
 
 module.exports = async function (data) {
   const values = await go(data)
-  // log results
-  const primarySuccess = values[0] instanceof Error
-  const secondarySuccess = values[1] instanceof Error
-
+  // evaluate results
+  const primarySuccess = !(values[0] instanceof Error)
+  const secondarySuccess = !(values[1] instanceof Error)
+  // return results
   if (primarySuccess && secondarySuccess) {
     // success
     return 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
