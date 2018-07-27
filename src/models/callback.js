@@ -27,7 +27,7 @@ module.exports = async function (body) {
     // check for UCCX returning error
     if (url.pathname === process.env.UCCX_CALLBACK_FAIL_URL) {
       // error
-      throw Error('callback failed. check callback number and try again.')
+      throw Error('Callback failed. Check callback number and try again.')
     } else {
       // successful ?
       const qs = queryString.parse(url.query)
@@ -36,6 +36,6 @@ module.exports = async function (body) {
     }
   } else {
     // wrong status code
-    throw Error('UCCX server returned status code ' + rsp.statusCode)
+    throw Error('Callback failed. UCCX server returned status code ' + rsp.statusCode)
   }
 }
