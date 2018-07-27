@@ -48,4 +48,24 @@ async function go (body) {
   }
 }
 
-module.exports = go
+
+module.exports = async function (data) {
+  const values = await go(data)
+  // log results
+  const primarySuccess = values[0] instanceof Error
+  const secondarySuccess = values[1] instanceof Error
+
+  if (primarySuccess && secondarySuccess) {
+    // success
+    return 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
+  } else if (primarySuccess) {
+    // partial success
+    return 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server.'
+  } else if (secondarySuccess) {
+    // partial success
+    return 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server.'
+  } else {
+    // failed
+    throw Error('Failed to update dCloud demo session configuration on the primary and secondary servers.')
+  }
+}
