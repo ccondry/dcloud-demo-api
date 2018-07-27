@@ -23,7 +23,7 @@ module.exports = async function (body) {
   if (rsp.statusCode === 302) {
     console.log('UCCX callback request accepted. parsing return data...')
     const url = new URL(rsp.headers.location)
-    console.log('UCCX callback request location returned:', url)
+    // console.log('UCCX callback request location returned')
     // check for UCCX returning error
     if (url.pathname === process.env.UCCX_CALLBACK_FAIL_URL) {
       // error
