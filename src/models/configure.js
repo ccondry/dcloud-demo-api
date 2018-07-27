@@ -17,8 +17,6 @@ async function go (body) {
     const xml = await readFile('/dcloud/session.xml')
     // parse session.xml to json object
     const json = await parseString(xml)
-    console.log('json', json)
-
     // REST method
     const method = 'PATCH'
     // url path
