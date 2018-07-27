@@ -22,7 +22,7 @@ async function go (body) {
     // REST method
     const method = 'PATCH'
     // url path
-    const path = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
+    const path = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
 
     // patch session on mm
     const p1 = request({
