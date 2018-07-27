@@ -11,8 +11,8 @@ router.get('/', async (req, res, next) => {
     const primarySuccess = values[0] instanceof Error
     const secondarySuccess = values[1] instanceof Error
      // ? 'failed' : 'success'
-    console.log('Update dCloud session configuration on primary server:', primary)
-    console.log('Update dCloud session configuration on secondary server:', secondary)
+    // console.log('Update dCloud session configuration on primary server:', primary)
+    // console.log('Update dCloud session configuration on secondary server:', secondary)
     if (primarySuccess && secondarySuccess) {
       // success
       const message = 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
