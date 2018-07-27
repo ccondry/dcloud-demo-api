@@ -16,6 +16,8 @@ app.use('/api/v1/cs', require('./routes/cs'))
 app.use('/api/v1/email', require('./routes/email'))
 // start uccx callback
 app.use('/api/v1/callback', require('./routes/callback'))
+// configure demo session
+app.use('/api/v1/configure', require('./routes/configure'))
 
 // log 404
 app.use((req, res, next) => {
