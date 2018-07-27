@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     const rsp = await uccxCallback(req.body)
     return res.status(200).send(rsp)
   } catch (error) {
-    console.log('failed to start UCCX callback', error.message)
+    console.log(error.message)
     return res.status(500).send(error.message)
   }
 })

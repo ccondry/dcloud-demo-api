@@ -36,6 +36,6 @@ module.exports = async function (body) {
     }
   } else {
     // wrong status code
-    throw Error('Callback failed. UCCX server returned status code ' + rsp.statusCode)
+    throw Error(`Callback failed. UCCX server returned status code ${rsp.statusCode} - ${rsp.body}`)
   }
 }
