@@ -19,20 +19,23 @@ module.exports = async function (body) {
     resolveWithFullResponse: true,
     simple: false
   })
-  console.log('UCCX callback response', rsp)
-  // if (rsp.statusCode === 301 || rsp.statusCode === 302) {
-  // }
-  console.log('UCCX callback request accepted. parsing return data...')
-  const url = new URL(rsp.headers.location)
-  console.log('UCCX callback request location returned:', url)
-  // check for UCCX returning error
-  if (url.pathname === process.env.UCCX_CALLBACK_FAIL_URL) {
-    // error
-    throw ('callback failed. check callback number and try again.')
+  console.log('UCCX callback response status code', rsp.statusCode)
+  if (rsp.statusCode === 301 || rsp.statusCode === 302) {
+    console.log('UCCX callback request accepted. parsing return data...')
+    const url = new URL(rsp.headers.location)
+    console.log('UCCX callback request location returned:', url)
+    // check for UCCX returning error
+    if (url.pathname === process.env.UCCX_CALLBACK_FAIL_URL) {
+      // error
+      throw Error('callback failed. check callback number and try again.')
+    } else {
+      // successful ?
+      const qs = queryString.parse(url.query)
+      console.log('UCCX callback success - qs:', qs)
+      return qs
+    }
   } else {
-    // successful ?
-    const qs = queryString.parse(url.query)
-    console.log('UCCX callback success - qs:', qs)
-    return qs
+    // wrong status code
+    throw Error('UCCX server returned status code ' + rsp.statusCode)
   }
 }
