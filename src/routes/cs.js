@@ -213,7 +213,7 @@ router.post('/transcript', async (req, res, next) => {
     console.log('successfully saved chat transcript')
     return res.status(201).send(response)
   } catch (e) {
-    console.error('failed to save survey answers', e)
+    console.error('failed to save chat transcript', e)
     return res.status(500).send(e)
   }
 })
