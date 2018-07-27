@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const fs = require('fs')
+const xml2js = require('xml2js')
+const util = require('util')
+// set default xml to json parsing params
+const parser = new xml2js.Parser({explicitArray : false})
+// make some promises
+const readFile = util.promisify(fs.readFile)
+const parseString = util.promisify(parser.parseString)
 
 router.get('/', async (req, res, next) => {
+  console.log('request to get session data')
   try {
-    console.log('request to get session data')
-
-    // read the dcloud session file and return the contents
-    fs.readFile('/dcloud/session.xml', function (err, data) {
-      if (err) {
-        throw err
-      }
-
-      // parse xml to json object
-      const json = JSON.parse(parser.toJson(data))
-      
-      // return data
-      return res.status(200).send(json.session)
-    })
+    // read the dcloud session.xml file
+    const xml = await readFile('/dcloud/session.xml')
+    // parse session.xml to json object
+    const json = await parseString(xml)
+    // return data
+    return res.status(200).send(json.session)
   } catch (e) {
-    console.error('failed to get session data', e)
-    return res.status(500).send(e)
+    console.error('failed to get session data', e.message)
+    return res.status(500).send(e.message)
   }
 })
 
