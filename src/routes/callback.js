@@ -4,6 +4,7 @@ const cb = require('../models/callback.js')
 
 router.post('/', async (req, res) => {
   try {
+    console.log('request for UCCX voice callback. request body:', req.body)
     const rsp = await cb(req.body)
     return res.status(200).send(rsp)
   } catch (error) {
