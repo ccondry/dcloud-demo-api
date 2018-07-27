@@ -15,13 +15,19 @@ router.get('/', async (req, res, next) => {
     console.log('Update dCloud session configuration on secondary server:', secondary)
     if (primarySuccess && secondarySuccess) {
       // success
-      return res.status(200).send('Successfully updated your dCloud demo configuration on the primary and secondary servers.')
+      const message = 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
+      console.log(message)
+      return res.status(200).send(message)
     } else if (primarySuccess) {
       // partial success
-      return res.status(200).send('Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server.')
+      const message = 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server.'
+      console.log(message)
+      return res.status(200).send(message)
     } else if (secondarySuccess) {
       // partial success
-      return res.status(200).send('Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server.')
+      const message = 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server.'
+      console.log(message)
+      return res.status(200).send(message)
     } else {
       // failed
       const message = 'Failed to update dCloud demo session configuration.'
