@@ -2,9 +2,13 @@ const fs = require('fs')
 const xml2js = require('xml2js')
 const request = require('request-promise-native')
 const util = require('util')
+
+// set default xml to json parsing params
+const parser = new xml2js.Parser({explicitArray : false})
+
 // make some promises
 const readFile = util.promisify(fs.readFile)
-const parseString = util.promisify(xml2js.parseString)
+const parseString = util.promisify(parser.parseString)
 
 async function go (body) {
   console.log('running: update dcloud session configuration')
