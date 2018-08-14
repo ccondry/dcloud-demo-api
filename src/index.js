@@ -18,6 +18,8 @@ app.use('/api/v1/email', require('./routes/email'))
 app.use('/api/v1/callback', require('./routes/callback'))
 // configure demo session
 app.use('/api/v1/configure', require('./routes/configure'))
+// get demo status
+app.use('/api/v1/status', require('./routes/status'))
 
 // log 404
 app.use((req, res, next) => {
