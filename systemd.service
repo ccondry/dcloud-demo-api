@@ -2,7 +2,7 @@
 Description=dcloud demo utility APIs
 
 [Service]
-ExecStart=/usr/bin/node /opt/dcloud/demo-api/index
+ExecStart=/usr/bin/node /opt/dcloud/demo-api/src/index
 Restart=always
 User=root
 Group=root
