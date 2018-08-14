@@ -1,14 +1,14 @@
 [Unit]
-Description=proxy for saving chat survey answers into ccedata database
+Description=dcloud demo utility APIs
 
 [Service]
-ExecStart=/usr/bin/node /opt/dcloud/survey-answers-api/index
+ExecStart=/usr/bin/node /opt/dcloud/demo-api/index
 Restart=always
 User=root
 Group=root
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/opt/dcloud/survey-answers-api
+WorkingDirectory=/opt/dcloud/demo-api
 
 [Install]
 WantedBy=multi-user.target
