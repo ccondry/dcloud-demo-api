@@ -1,0 +1,1 @@
+*/5 * * * * /bin/sh -c 'cd /opt/dcloud/demo-api && ./update.sh' 2>&1 | /usr/bin/logger -t cron-update-demo-api
