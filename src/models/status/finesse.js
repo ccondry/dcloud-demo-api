@@ -1,12 +1,12 @@
 const request = require('request-promise-native')
 const xml2js = require('xml2js')
 
-const host = process.env.FINESSE_HOST
-const username = process.env.FINESSE_USERNAME
-const password = process.env.FINESSE_PASSWORD
-const labMode = process.env.CS_LAB_MODE === 'true'
-const csHost1 = process.env.CS_REST_HOST_1
-const csHost2 = process.env.CS_REST_HOST_2
+const host = process.env.FINESSE_HOST || 'finesse1.dcloud.cisco.com'
+const username = process.env.FINESSE_USERNAME || 'administrator'
+const password = process.env.FINESSE_PASSWORD || 'C1sco12345'
+const labMode = process.env.CS_LAB_MODE !== 'false'
+const csHost1 = process.env.CS_REST_HOST_1 || 'http://198.19.253.32/api/pcce/cs'
+const csHost2 = process.env.CS_REST_HOST_2 || 'http://198.19.253.49/api/pcce/cs'
 
 // promisify xml2js.parseString
 function parseXmlString (string) {
@@ -25,7 +25,7 @@ function decodeConnectionData (connectionDataString) {
   return connectionData
 }
 
-async function getFinesseCsStatus () {
+async function getCsStatus () {
   // get finesse context service machine account status
   console.log('Getting Context Service machine account status for', host, 'in Context Service')
 
@@ -90,5 +90,5 @@ async function getFinesseCsStatus () {
 }
 
 module.exports = {
-  getFinesseCsStatus
+  getCsStatus
 }
