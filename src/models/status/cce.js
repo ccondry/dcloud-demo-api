@@ -57,15 +57,13 @@ async function getCsStatus () {
   }
 
   // parse xml to json
-  let json
   try {
-    json = await parseXmlString(xml)
+    const json = await parseXmlString(xml)
+    return {
+      state: json.contextServiceRegistration.state
+    }
   } catch (e) {
     throw new Error(`Failed to get parse Context Service status from CCE AW server ${host} - ${e.message}`)
-  }
-
-  return {
-    state: json.contextServiceRegistration.state
   }
 }
 
