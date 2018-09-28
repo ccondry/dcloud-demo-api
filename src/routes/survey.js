@@ -13,9 +13,9 @@ router.post('/', async (req, res, next) => {
   //   q2: '5',
   // }
   try {
-    console.log('request to save survey answers:', req.body)
+    console.log('request to save survey answers:', req.query)
     // post the incoming answers to the database
-    const rows = await model.saveAnswers(req.body)
+    const rows = await model.saveAnswers(req.query)
     console.log('successfully saved survey answers')
     // accepted
     return res.status(201).send({rows})
