@@ -1,0 +1,12 @@
+user -> dcloud PCCE instant demo -> ha-proxy -> dcloud-toolbox-sjc.cisco.com -> shared services toolbox UI
+
+log in to toolbox UI pushes password change to the linked account in the demo LDAP
+
+
+dcloud-collab/toolbox-ui and dcloud-collab/toolbox-api live on toolbox1 and toolbox2 VMs in shared services
+dcloud-collab/demo-api expanded to receive requests like update LDAP password, create agent, provision phone
+toolbox-api uses JWT with all requests to demo-api
+branding will run demo-api (as today) plus cce-service, cucm-service, etc.
+
+
+session registration
