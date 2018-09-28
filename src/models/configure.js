@@ -53,26 +53,31 @@ async function go (body) {
 
 
 module.exports = async function (data) {
-  const values = await go(data)
-  // evaluate results
-  const primarySuccess = !(values[0] instanceof Error)
-  const secondarySuccess = !(values[1] instanceof Error)
-  // return results
-  if (primarySuccess && secondarySuccess) {
-    // success
-    return 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
-  } else if (primarySuccess) {
-    // partial success
-    console.error(values[1].message)
-    return 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server.'
-  } else if (secondarySuccess) {
-    // partial success
-    console.error(values[0].message)
-    return 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server.'
-  } else {
-    // failed
-    console.error(values[0].message)
-    console.error(values[1].message)
-    throw Error('Failed to update dCloud demo session configuration on the primary and secondary servers.')
+  try {
+    // try to update the config
+    const values = await go(data)
+    // evaluate results
+    const primarySuccess = !(values[0] instanceof Error)
+    const secondarySuccess = !(values[1] instanceof Error)
+    // return results
+    if (primarySuccess && secondarySuccess) {
+      // success
+      return 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
+    } else if (primarySuccess) {
+      // partial success
+      console.error(values[1].message)
+      return 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server.'
+    } else if (secondarySuccess) {
+      // partial success
+      console.error(values[0].message)
+      return 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server.'
+    } else {
+      // failed
+      console.error(values[0].message)
+      console.error(values[1].message)
+      throw Error('Failed to update dCloud demo session configuration on the primary and secondary servers.')
+    }
+  } catch (e) {
+    throw e
   }
 }
