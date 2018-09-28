@@ -32,6 +32,7 @@
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "express-xml-bodyparser": "^0.3.0",
     "mssql": "^4.1.0",
     "nodemailer": "^4.6.6",
     "query-string": "^6.1.0",

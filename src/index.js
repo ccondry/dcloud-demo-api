@@ -2,9 +2,12 @@ const app = require('express')()
 const cors = require('cors')
 const bodyParser = require('body-parser')
 require('dotenv').load()
+const xmlparser = require('express-xml-bodyparser')
 
 app.use(cors())
-app.use(bodyParser.json({limit: '5kb'}))
+app.use(bodyParser.json({limit: '16mb'}))
+app.use(bodyParser.urlencoded({limit: '16mb', extended: true }))
+app.use(xmlparser())
 
 // dcloud session info
 app.use('/api/v1/session', require('./routes/session'))
