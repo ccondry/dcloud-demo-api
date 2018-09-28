@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
   try {
     const info = await email.send(mailOptions)
     console.log(info)
-    res.set("Content-type", "application/json; charset=utf-8")
+    res.set("Content-Type", "application/json; charset=utf-8")
     .send(JSON.stringify(info, null, 2));
   } catch (error) {
     console.log(error)
