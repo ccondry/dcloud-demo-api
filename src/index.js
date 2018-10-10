@@ -21,6 +21,8 @@ app.use('/api/v1/email', require('./routes/email'))
 app.use('/api/v1/callback', require('./routes/callback'))
 // configure demo session
 app.use('/api/v1/configure', require('./routes/configure'))
+// forward client to cumulus website with session ID and datacenter prefilled
+app.use('/api/v1/cumulus', require('./routes/cumulus'))
 // get demo status
 app.use('/api/v1/status', require('./routes/status'))
 
