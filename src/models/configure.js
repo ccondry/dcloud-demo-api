@@ -62,31 +62,27 @@ module.exports = async function (data) {
     // return results
     if (primarySuccess && secondarySuccess) {
       // success
-      let message = 'Successfully updated your dCloud demo configuration on the primary and secondary servers.'
-      message += '\r\n'
-      message += JSON.stringify(data)
+      let message = 'Successfully updated your dCloud demo configuration on the primary and secondary servers. \r\n'
+      message += 'Settings: ' + JSON.stringify(data)
       return message
     } else if (primarySuccess) {
       // partial success
       console.error(values[1].message)
-      let message = 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server.'
-      message += '\r\n'
-      message += JSON.stringify(data)
+      let message = 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server. \r\n'
+      message += 'Settings: ' + JSON.stringify(data)
       return message
     } else if (secondarySuccess) {
       // partial success
       console.error(values[0].message)
-      let message = 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server.'
-      message += '\r\n'
-      message += JSON.stringify(data)
+      let message = 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server. \r\n'
+      message += 'Settings: ' + JSON.stringify(data)
       return message
     } else {
       // failed
       console.error(values[0].message)
       console.error(values[1].message)
-      let message = 'Failed to update dCloud demo session configuration on the primary and secondary servers.'
-      message += '\r\n'
-      message += JSON.stringify(data)
+      let message = 'Failed to update dCloud demo session configuration on the primary and secondary servers. \r\n'
+      message += 'Settings: ' + JSON.stringify(data)
       throw Error(message)
     }
   } catch (e) {
