@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     // default TO address
     let to = process.env.email_to
     // try to make TO address from incoming data
-    if (req.body.to && req.body.to.length && req.indexOf('@') < 0) {
+    if (req.body.to && req.body.to.length && req.body.to.indexOf('@') < 0) {
       to = req.body.to + '@dcloud.cisco.com'
     }
     const mailOptions = {
