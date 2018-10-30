@@ -3,30 +3,10 @@ const router = express.Router()
 const model = require('../models/survey')
 
 // save survey answers to survey database
-router.post('/', async (req, res, next) => {
-  // example data
-  // const data = {
-  //   surveyId: 'SPARKY001',
-  //   ani: '1234567890',
-  //   name: 'Jim Smith',
-  //   q1: '4',
-  //   q2: '5',
-  // }
-  try {
-    console.log('request to save survey answers:', req.query)
-    // post the incoming answers to the database
-    const rows = await model.saveAnswers(req.query)
-    console.log('successfully saved survey answers')
-    // accepted
-    return res.status(201).send({rows})
-  } catch (e) {
-    console.error('failed to save survey answers', e)
-    return res.status(500).send(e)
-  }
-})
+router.post('/', doSaveAnswers)
+router.get('/', doSaveAnswers)
 
-// save survey answers to survey database
-router.get('/', async (req, res, next) => {
+async function doSaveAnswers (req, res, next) {
   // example data
   // const data = {
   //   surveyId: 'SPARKY001',
@@ -36,9 +16,15 @@ router.get('/', async (req, res, next) => {
   //   q2: '5',
   // }
   try {
-    console.log('request to save survey answers:', req.query)
+    let answers
+    if (Object.keys(req.body).length)) {
+      answers = req.body
+    } else {
+      answers = req.query
+    }
+    console.log('request to save survey answers:', answers)
     // post the incoming answers to the database
-    const rows = await model.saveAnswers(req.query)
+    const rows = await model.saveAnswers(answers)
     console.log('successfully saved survey answers')
     // accepted
     return res.status(201).send({rows})
