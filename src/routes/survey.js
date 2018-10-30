@@ -17,7 +17,7 @@ async function doSaveAnswers (req, res, next) {
   // }
   try {
     let answers
-    if (Object.keys(req.body).length)) {
+    if (Object.keys(req.body).length) {
       answers = req.body
     } else {
       answers = req.query
