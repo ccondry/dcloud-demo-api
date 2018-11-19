@@ -13,23 +13,29 @@ async function getConfig () {
   }
   // url path
   const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
+  // basic auth is the anyconnect username and password for this dcloud session
+  const username = `v${json.session.vpod}user1`
+  const basicAuth = Base64.encode(`${username}:${json.session.anycpwd}`)
+
+  const options = {
+    baseUrl: process.env.MM_API_1,
+    url,
+    headers: {
+      Authorization: 'Basic ' + basicAuth
+    },
+    json: true
+  }
+
   let response
   try {
     // get session config from mm
-    return await request({
-      baseUrl: process.env.MM_API_1,
-      url,
-      json: true
-    })
+    return await request(options)
   } catch (e) {
     console.log('failed to get session config from', process.env.MM_API_1, e.message)
-    // get session config from mm-dev
     try {
-      return await request({
-        baseUrl: process.env.MM_API_2,
-        url,
-        json: true
-      })
+      // get session config from mm-dev
+      options.baseUrl = process.env.MM_API_2
+      return await request(options)
     } catch (e2) {
       console.log('failed to get session config from', process.env.MM_API_2, e2.message)
       // failed both
