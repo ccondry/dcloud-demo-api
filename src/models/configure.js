@@ -48,8 +48,7 @@ async function patchConfig (body) {
     const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
     // basic auth is the anyconnect username and password for this dcloud session
     const username = `v${json.session.vpod}user1`
-    const basicAuth = Base64.encode(`${username}:${json.session.anycpwd}`)
-
+    const basicAuth = Buffer.from(`${username}:${json.session.anycpwd}`).toString('base64')
     const options = {
       baseUrl: process.env.MM_API_1,
       method,
