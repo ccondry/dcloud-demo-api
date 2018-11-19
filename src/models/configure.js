@@ -13,16 +13,10 @@ async function getConfig () {
   }
   // url path
   const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
-  // basic auth is the anyconnect username and password for this dcloud session
-  const username = `v${json.session.vpod}user1`
-  const basicAuth = Base64.encode(`${username}:${json.session.anycpwd}`)
 
   const options = {
     baseUrl: process.env.MM_API_1,
     url,
-    headers: {
-      Authorization: 'Basic ' + basicAuth
-    },
     json: true
   }
 
@@ -51,23 +45,28 @@ async function patchConfig (body) {
     // REST method
     const method = 'PATCH'
     // url path
-    const path = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
+    const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
+    // basic auth is the anyconnect username and password for this dcloud session
+    const username = `v${json.session.vpod}user1`
+    const basicAuth = Base64.encode(`${username}:${json.session.anycpwd}`)
+
+    const options = {
+      baseUrl: process.env.MM_API_1,
+      method,
+      url,
+      headers: {
+        Authorization: 'Basic ' + basicAuth
+      },
+      body,
+      json: true
+    }
 
     // patch session on mm
-    const p1 = request({
-      url: 'https://mm.cxdemo.net' + path,
-      method,
-      body,
-      json: true
-    })
+    const p1 = request(options)
 
     // and patch session on mm-dev
-    const p2 = request({
-      url: 'https://mm-dev.cxdemo.net' + path,
-      method,
-      body,
-      json: true
-    })
+    options.baseUrl = process.env.MM_API_2
+    const p2 = request(options)
 
     // wait for requests to resolve
     const values = await Promise.all([
