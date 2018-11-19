@@ -1,22 +1,47 @@
 const fs = require('fs')
-const xml2js = require('xml2js')
 const request = require('request-promise-native')
-const util = require('util')
+const session = require('./session.js')
 
-// set default xml to json parsing params
-const parser = new xml2js.Parser({explicitArray : false})
+async function getConfig () {
+  let json
+  try {
+    json = await session.get()
+    console.log('loaded session.xml file. session', json.session.id, 'in datacenter', json.session.datacenter)
+  } catch (e) {
+    console.log('failed to get session config from local session.xml file:', e)
+    throw e
+  }
+  // url path
+  const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
+  let response
+  try {
+    // get session config from mm
+    return await request({
+      baseUrl: process.env.MM_API_1,
+      url,
+      json: true
+    })
+  } catch (e) {
+    console.log('failed to get session config from', process.env.MM_API_1, e.message)
+    // get session config from mm-dev
+    try {
+      return await request({
+        baseUrl: process.env.MM_API_2,
+        url,
+        json: true
+      })
+    } catch (e2) {
+      console.log('failed to get session config from', process.env.MM_API_2, e2.message)
+      // failed both
+      throw e2
+    }
+  }
+}
 
-// make some promises
-const readFile = util.promisify(fs.readFile)
-const parseString = util.promisify(parser.parseString)
-
-async function go (body) {
+async function patchConfig (body) {
   console.log('running: update dcloud session configuration')
   try {
-    // read the dcloud session.xml file
-    const xml = await readFile('/dcloud/session.xml')
-    // parse session.xml to json object
-    const json = await parseString(xml)
+    const json = await session.get()
     // REST method
     const method = 'PATCH'
     // url path
@@ -51,11 +76,10 @@ async function go (body) {
   }
 }
 
-
-module.exports = async function (data) {
+async function updateConfig (data) {
   try {
     // try to update the config
-    const values = await go(data)
+    const values = await patchConfig(data)
     // evaluate results
     const primarySuccess = !(values[0] instanceof Error)
     const secondarySuccess = !(values[1] instanceof Error)
@@ -88,4 +112,9 @@ module.exports = async function (data) {
   } catch (e) {
     throw e
   }
+}
+
+module.exports = {
+  update: updateConfig,
+  get: getConfig
 }

@@ -9,8 +9,22 @@ app.use(bodyParser.json({limit: '16mb'}))
 app.use(bodyParser.urlencoded({limit: '16mb', extended: true }))
 app.use(xmlparser())
 
-// dcloud session info
+/*****************
+Internal Endpoints
+*****************/
+// dcloud session info - this route is for internal demo use only, and should
+// not have an internet-accessible URL
 app.use('/api/v1/session', require('./routes/session'))
+// endpoints list for the dcloud-demo-ui website
+app.use('/api/v1/endpoints', require('./routes/endpoints'))
+// configure demo session
+app.use('/api/v1/configure', require('./routes/configure'))
+// forward client to cumulus website with session ID and datacenter prefilled
+app.use('/api/v1/cumulus', require('./routes/cumulus'))
+
+/*****************
+External Endpoints
+*****************/
 // add chat survey answers to db
 app.use('/api/v1/survey', require('./routes/survey'))
 // context service
@@ -19,10 +33,6 @@ app.use('/api/v1/cs', require('./routes/cs'))
 app.use('/api/v1/email', require('./routes/email'))
 // start uccx callback
 app.use('/api/v1/callback', require('./routes/callback'))
-// configure demo session
-app.use('/api/v1/configure', require('./routes/configure'))
-// forward client to cumulus website with session ID and datacenter prefilled
-app.use('/api/v1/cumulus', require('./routes/cumulus'))
 // get demo status
 app.use('/api/v1/status', require('./routes/status'))
 

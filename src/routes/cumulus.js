@@ -1,21 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const fs = require('fs')
-const xml2js = require('xml2js')
-const util = require('util')
-// set default xml to json parsing params
-const parser = new xml2js.Parser({explicitArray : false})
-// make some promises
-const readFile = util.promisify(fs.readFile)
-const parseString = util.promisify(parser.parseString)
+const session = require('./session.js')
 
 // forward client to cumulus website
 router.get('/', async (req, res, next) => {
   try {
-    // read the dcloud session.xml file
-    const xml = await readFile('/dcloud/session.xml')
     // parse session.xml to json object
-    const json = await parseString(xml)
+    const json = await session.get()
     // extract relevant data
     const session = json.session.id
     const datacenter = json.session.datacenter
