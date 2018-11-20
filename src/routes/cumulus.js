@@ -8,12 +8,10 @@ router.get('/', async (req, res, next) => {
     // parse session.xml to json object
     const json = await session.get()
     // extract relevant data
-    const session = json.session.id
-    const datacenter = json.session.datacenter
     // determine if we should redirect to the secondary server or primary server
-    const host = req.query.dev === 'true' ? 'mm-dev.cxdemo.net' : 'mm.cxdemo.net'
+    const host = req.query.dev === 'true' ? process.env.MM_API_2 : process.env.MM_API_1
     // redirect client with 302
-    return res.redirect(302, `https://${host}?session=${session}&datacenter=${datacenter}`)
+    return res.redirect(302, `${host}?session=${json.session.id}&datacenter=${json.session.datacenter}`)
   } catch (e) {
     console.error(e)
     return res.status(500).send(e.message)
