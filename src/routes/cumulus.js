@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const session = require('../models/session.js')
+const session = require('../models/session')
 
 // forward client to cumulus website
 router.get('/', async (req, res, next) => {

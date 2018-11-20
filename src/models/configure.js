@@ -1,6 +1,6 @@
 const fs = require('fs')
 const request = require('request-promise-native')
-const session = require('./session.js')
+const session = require('./session')
 
 async function getConfig () {
   let json
