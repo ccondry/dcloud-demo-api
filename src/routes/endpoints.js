@@ -16,12 +16,14 @@ router.get('/', async function (req, res, next) {
   if (process.env.NODE_ENV === 'production') {
     endpoints = {
       configure: '/api/v1/configure',
-      session: '/api/v1/session'
+      session: '/api/v1/session',
+      upstream: '/api/v1/upstream'
     }
   } else {
     endpoints = {
       configure: 'http://localhost:3022/api/v1/configure',
-      session: 'http://localhost:3022/api/v1/session'
+      session: 'http://localhost:3022/api/v1/session',
+      upstream: 'http://localhost:3022/api/v1/upstream'
     }
   }
 
