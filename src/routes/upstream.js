@@ -30,17 +30,18 @@ router.post('/customer', async (req, res, next) => {
 })
 
 // set vertical of customer
-router.post('/customer/vertical', async (req, res, next) => {
+router.post('/customer/:id', async (req, res, next) => {
   try {
     console.log('POST request to set Upstream customer vertical...')
-    if (!req.body.contactId || !req.body.vertical) {
+    if (!req.body.vertical) {
       console.log('POST request to create Upstream customer failed - invalid input')
-      return res.status(400).send('Invalid input. Please provide the following parameters in the body of your request: contactId, vertical.')
+      return res.status(400).send('Invalid input. Please provide the following parameters in the body of your request: vertical.')
     }
     await model.setVertical({
-      contactId: req.body.contactId,
-      vertical: req.body.verticalId
+      contactId: req.params.id,
+      vertical: req.body.vertical
     })
+    console.log('POST request to set Upstream customer vertical successful. Set customer', req.params.id, 'vertical to', req.body.vertical)
     // return ACCEPTED
     return res.status(202).send()
   } catch (e) {
