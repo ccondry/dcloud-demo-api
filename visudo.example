@@ -1,2 +1,2 @@
-# Allow 'administrator' user to restart dmeo-api service
+# Allow 'administrator' user to restart demo-api service
 administrator ALL=NOPASSWD: /bin/systemctl restart demo-api.service
