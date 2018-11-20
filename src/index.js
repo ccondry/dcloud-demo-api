@@ -3,6 +3,10 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 require('dotenv').load()
 const xmlparser = require('express-xml-bodyparser')
+const requestIp = require('request-ip')
+
+// get remote IP address of request client as req.clientIp
+app.use(requestIp.mw())
 
 app.use(cors())
 app.use(bodyParser.json({limit: '16mb'}))
