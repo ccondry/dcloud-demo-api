@@ -17,13 +17,17 @@ router.get('/', async function (req, res, next) {
     endpoints = {
       configure: '/api/v1/configure',
       session: '/api/v1/session',
-      upstream: '/api/v1/upstream'
+      upstream: {
+        customer: '/api/v1/upstream/customer'
+      }
     }
   } else {
     endpoints = {
       configure: 'http://localhost:3022/api/v1/configure',
       session: 'http://localhost:3022/api/v1/session',
-      upstream: 'http://localhost:3022/api/v1/upstream'
+      upstream: {
+        customer: 'http://localhost:3022/api/v1/upstream/customer'
+      }
     }
   }
 
