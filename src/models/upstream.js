@@ -7,6 +7,20 @@ const config = {
   database: process.env.UPSTREAM_SQL_DB
 }
 
+async function getCustomers () {
+  const query = `SELECT * FROM [dbo].[data_Customers]`
+
+  try {
+    const pool = await new mssql.ConnectionPool(config).connect()
+    const results = await pool.request().query(query)
+    return results.recordset
+  } catch (e) {
+    throw e
+  } finally {
+    mssql.close()
+  }
+}
+
 async function createCustomer (data) {
   try {
     // get connection pool
@@ -66,4 +80,4 @@ async function setVertical (data) {
   }
 }
 
-module.exports = { setVertical, createCustomer }
+module.exports = { setVertical, createCustomer, getCustomers }

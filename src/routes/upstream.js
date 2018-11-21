@@ -2,6 +2,22 @@ const express = require('express')
 const router = express.Router()
 const model = require('../models/upstream')
 
+// list customers
+router.get('/customer', async (req, res, next) => {
+  try {
+    console.log('GET request to list Upstream customers...')
+    const customers = await model.getCustomers()
+    console.log('GET request to list Upstream customers succeeded. Found', customers.length, 'records.')
+    // return OK
+    return res.status(200).send(customers)
+  } catch (e) {
+    // failed
+    console.error('failed to list Upstream customers:', e.message)
+    // return error message
+    return res.status(500).send(e.message)
+  }
+})
+
 // add customer
 router.post('/customer', async (req, res, next) => {
   try {
