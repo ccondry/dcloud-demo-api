@@ -113,4 +113,4 @@ async function setVertical (data) {
   }
 }
 
-module.exports = { setVertical, createCustomer, getCustomers }
+module.exports = { setVertical, createCustomer, getCustomers, copyInteractionHistory }
