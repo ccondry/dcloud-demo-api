@@ -36,7 +36,40 @@ async function createCustomer (data) {
     // run sp
     const results1 = await request1.execute('dCloudSetCustomer')
     // const ret = results1.output.return_value
-    console.log('results1', results1)
+    // console.log('results1', results1)
+
+    // mssql.close()
+    // return results.rowsAffected
+    return results1
+  } catch (e) {
+    throw e
+  } finally {
+    mssql.close()
+  }
+}
+
+async function copyInteractionHistory ({
+  sourceContactId,
+  contactId,
+  name,
+  address = '',
+  phone,
+  email
+}) {
+  try {
+    // get connection pool
+    const pool = await new mssql.ConnectionPool(config).connect()
+    const request1 = new mssql.Request(pool)
+    .input('SourceContactId', sourceContactId)
+    .input('ContactId', contactId)
+    .input('NewContactName', name)
+    .input('NewSourceAddress', address)
+    .input('NewPhoneNumber', phone)
+    .input('NewEmailAddress', email)
+    // run sp
+    const results1 = await request1.execute('dCloudIRDBIHReplicateCustomerIHDetail')
+    // const ret = results1.output.return_value
+    // console.log('results1', results1)
 
     // mssql.close()
     // return results.rowsAffected
