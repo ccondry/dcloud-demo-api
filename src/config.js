@@ -5,6 +5,6 @@ const histories = {
   'Travel': '6543214',
   'City': '6543215'
 }
-module.export = {
+module.exports = {
   histories
 }
