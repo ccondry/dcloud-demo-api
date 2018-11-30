@@ -23,7 +23,7 @@ router.get('/customer', async (req, res, next) => {
 router.post('/customer', async (req, res, next) => {
   try {
     console.log('POST request to create Upstream customer...')
-    if (!req.body.contactId || !req.body.vertical || !req.body.firstName || !req.body.lastName || !req.body.phone || !req.body.email) {
+    if (!req.body.vertical || !req.body.firstName || !req.body.lastName || !req.body.phone || !req.body.email) {
       console.log('POST request to create Upstream customer failed - invalid input')
       return res.status(400).send('Invalid input. Please provide the following parameters in the body of your request: contactId, firstName, lastName, phone, email, vertical.')
     }
