@@ -36,20 +36,23 @@ router.post('/customer', async (req, res, next) => {
       email: req.body.email
     })
     // create customer succeeded
-    console.log('POST request to create Upstream customer - customer created. Copying interaction history...')
-    // determine source contact ID to use for copying interaction history
-    // default to first
-    const sourceContactId = config.histories[req.body.vertical] || config.histories[0]
-    // now copy interaction history
-    await model.copyInteractionHistory({
-      sourceContactId,
-      contactId: req.body.phone,
-      vertical: req.body.vertical,
-      name: req.body.firstName + ' ' + req.body.lastName,
-      phone: req.body.phone,
-      email: req.body.email
-    })
-    console.log('POST request to create Upstream customer - interaction history copied.')
+    console.log('POST request to create Upstream customer - customer created.'
+    if (req.body.interactionHistory == true) {
+      console.log('Copying interaction history...')
+      // determine source contact ID to use for copying interaction history
+      // default to first
+      const sourceContactId = config.histories[req.body.vertical] || config.histories[0]
+      // now copy interaction history
+      await model.copyInteractionHistory({
+        sourceContactId,
+        contactId: req.body.phone,
+        vertical: req.body.vertical,
+        name: req.body.firstName + ' ' + req.body.lastName,
+        phone: req.body.phone,
+        email: req.body.email
+      })
+      console.log('POST request to create Upstream customer - interaction history copied.')
+    }
     console.log('POST request to create Upstream customer succeeded')
     // return ACCEPTED
     return res.status(202).send()
