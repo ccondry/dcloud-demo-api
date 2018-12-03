@@ -36,7 +36,7 @@ router.post('/customer', async (req, res, next) => {
       email: req.body.email
     })
     // create customer succeeded
-    console.log('POST request to create Upstream customer - customer created.'
+    console.log('POST request to create Upstream customer - customer created.')
     if (req.body.interactionHistory == true) {
       console.log('Copying interaction history...')
       // determine source contact ID to use for copying interaction history
