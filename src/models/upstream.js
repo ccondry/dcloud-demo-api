@@ -81,6 +81,37 @@ async function copyInteractionHistory ({
   }
 }
 
+async function setCustomerWithInteractionHistory ({
+  contactId,
+  phone,
+  email,
+  firstName,
+  lastName,
+  vertical,
+  deleteInteractionHistory = true,
+  createInteractionHistory = true
+}) {
+  try {
+    // get connection pool
+    const pool = await new mssql.ConnectionPool(config).connect()
+    const request1 = new mssql.Request(pool)
+    .input('ContactId', contactId)
+    .input('PhoneNumber', phone)
+    .input('EmailAddress', email)
+    .input('FirstName', firstName)
+    .input('FirstName', lastName)
+    .input('Vertical', vertical)
+    .input('DeleteIH', deleteInteractionHistory ? 'Y' : 'N')
+    .input('CreateIH', createInteractionHistory ? 'Y' : 'N')
+    // run sp
+    return request1.execute('dCloudSetCustomerWithIH')
+  } catch (e) {
+    throw e
+  } finally {
+    mssql.close()
+  }
+}
+
 async function setVertical (data) {
 
   try {
@@ -113,4 +144,10 @@ async function setVertical (data) {
   }
 }
 
-module.exports = { setVertical, createCustomer, getCustomers, copyInteractionHistory }
+module.exports = {
+  setVertical,
+  createCustomer,
+  getCustomers,
+  copyInteractionHistory,
+  setCustomerWithInteractionHistory
+}
