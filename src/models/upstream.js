@@ -99,7 +99,7 @@ async function setCustomerWithInteractionHistory ({
     .input('PhoneNumber', phone)
     .input('EmailAddress', email)
     .input('FirstName', firstName)
-    .input('FirstName', lastName)
+    .input('LastName', lastName)
     .input('Vertical', vertical)
     .input('DeleteIH', deleteInteractionHistory ? 'Y' : 'N')
     .input('CreateIH', createInteractionHistory ? 'Y' : 'N')
