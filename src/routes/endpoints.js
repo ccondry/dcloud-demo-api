@@ -19,7 +19,8 @@ router.get('/', async function (req, res, next) {
       session: '/api/v1/session',
       upstream: {
         customer: '/api/v1/upstream/customer'
-      }
+      },
+      verticals: '/api/v1/verticals'
     }
   } else {
     endpoints = {
@@ -27,7 +28,8 @@ router.get('/', async function (req, res, next) {
       session: 'http://localhost:3022/api/v1/session',
       upstream: {
         customer: 'http://localhost:3022/api/v1/upstream/customer'
-      }
+      },
+      verticals: 'http://localhost:3022/api/v1/verticals'
     }
   }
 

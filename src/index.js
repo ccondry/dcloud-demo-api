@@ -41,6 +41,8 @@ app.use('/api/v1/email', require('./routes/email'))
 app.use('/api/v1/callback', require('./routes/callback'))
 // get demo status
 app.use('/api/v1/status', require('./routes/status'))
+// get demo verticals
+app.use('/api/v1/verticals', require('./routes/verticals'))
 
 // log 404
 app.use((req, res, next) => {
