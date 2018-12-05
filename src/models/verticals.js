@@ -7,6 +7,9 @@ async function getConfig () {
   const options = {
     baseUrl: process.env.MM_API_1,
     url,
+    qs: {
+      all: true
+    },
     json: true
   }
 
