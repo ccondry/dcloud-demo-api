@@ -43,6 +43,8 @@ app.use('/api/v1/callback', require('./routes/callback'))
 app.use('/api/v1/status', require('./routes/status'))
 // get demo verticals
 app.use('/api/v1/verticals', require('./routes/verticals'))
+// get mobile app answers
+app.use('/api/v1/answers', require('./routes/answers'))
 
 // log 404
 app.use((req, res, next) => {
