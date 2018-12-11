@@ -1,7 +1,13 @@
 const app = require('express')()
 const cors = require('cors')
 const bodyParser = require('body-parser')
+// load .env file into process.env vars
 require('dotenv').load()
+
+// make sure we have some default cs-manager servers URLs set, in case they don't exist in .env
+process.env.CS_MANAGER_API_1 = process.env.CS_MANAGER_API_1 || 'https://cs-manager.dcloud.cisco.com'
+process.env.CS_MANAGER_API_2 = process.env.CS_MANAGER_API_2 || 'https://cs-manager-2.dcloud.cisco.com'
+
 const xmlparser = require('express-xml-bodyparser')
 const requestIp = require('request-ip')
 

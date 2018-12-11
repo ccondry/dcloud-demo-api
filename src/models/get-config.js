@@ -1,9 +1,11 @@
 const request = require('request-promise-native')
 
-// get data from mm, and fall back to mm-dev if there is an error
-async function getConfig (url) {
+// try 2 servers for getting data
+
+// get data from primary baseUrl1, and fall back to baseUrl2 if there is an error
+async function redundantGet (url, baseUrl1, baseUrl2) {
   const options = {
-    baseUrl: process.env.MM_API_1,
+    baseUrl: baseUrl1,
     url,
     qs: {
       all: true
@@ -13,20 +15,20 @@ async function getConfig (url) {
 
   let response
   try {
-    // get session config from mm
+    // get session config from primary
     return await request(options)
   } catch (e) {
-    console.log('failed to get verticals list from', process.env.MM_API_1, e.message)
+    console.log('failed to get verticals list from', baseUrl1, e.message)
     try {
-      // get session config from mm-dev
-      options.baseUrl = process.env.MM_API_2
+      // get session config from secondary
+      options.baseUrl = baseUrl2
       return await request(options)
     } catch (e2) {
-      console.log('failed to get verticals list from', process.env.MM_API_2, e2.message)
+      console.log('failed to get verticals list from', baseUrl2, e2.message)
       // failed both
       throw e2
     }
   }
 }
 
-module.exports = getConfig
+module.exports = redundantGet
