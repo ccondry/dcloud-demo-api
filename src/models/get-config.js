@@ -3,13 +3,11 @@ const request = require('request-promise-native')
 // try 2 servers for getting data
 
 // get data from primary baseUrl1, and fall back to baseUrl2 if there is an error
-async function redundantGet (url, baseUrl1, baseUrl2) {
+async function redundantGet (url, baseUrl1, baseUrl2, qs) {
   const options = {
     baseUrl: baseUrl1,
     url,
-    qs: {
-      all: true
-    },
+    qs,
     json: true
   }
 
