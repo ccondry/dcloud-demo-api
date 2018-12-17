@@ -13,9 +13,9 @@ router.get('/', async (req, res, next) => {
     // construct the redirect URL
     let redirect = `${host}?session=${json.session.id}&datacenter=${json.session.datacenter}`
     // if PCCE, set the vertical config flag so that cumulus does not prompt for vertical selection
-    if (process.env.DEMO_TYPE === 'pcce') {
-      redirect += '&config=true'
-    }
+    // if (process.env.DEMO_TYPE === 'pcce') {
+    //   redirect += '&config=true'
+    // }
     // redirect client with 302
     return res.redirect(302, redirect)
   } catch (e) {
