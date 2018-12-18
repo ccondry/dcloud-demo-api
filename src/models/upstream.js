@@ -118,10 +118,8 @@ async function setVertical (data) {
     // get connection pool
     const pool = await new mssql.ConnectionPool(config).connect()
     const request1 = new mssql.Request(pool)
-    .input('ContactId', data.contactId)
-    .input('Vertical', data.vertical)
+    .input('Vertical', data)
     // run sp
-    const results1 = await request1.execute('dCloudSetCustomerVertical')
     // const ret = results1.output.return_value
     // console.log('ret', ret)
 
@@ -136,6 +134,7 @@ async function setVertical (data) {
     // .input('q2', mssql.VarChar, data.q2)
     // .query(query)
     // return results.rowsAffected
+    const results1 = await request1.execute('dCloudSetVertical')
     return results1
   } catch (e) {
     throw e
