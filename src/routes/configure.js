@@ -32,7 +32,7 @@ router.post('/', async (req, res, next) => {
       console.log('this is pcce demo, so set the Upstream vertical also. using vertical', req.body.vertical)
       // get vertical details from vertical ID
       const vertical = await verticals.getOne(req.body.vertical)
-      console.log('vertical =', vertical)
+      // console.log('vertical =', vertical)
       console.log('Vertical name is', vertical.name)
       // set the vertical on the upstream customer using vertical name
       await upstream.setVertical(vertical.name)
