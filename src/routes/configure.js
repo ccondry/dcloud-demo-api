@@ -24,14 +24,18 @@ router.post('/', async (req, res, next) => {
     console.log('POST request to configure demo')
     // patch session on mm and mm-dev
     const message = await configure.update(req.body)
+    console.log('updated demo configuration data on mm and mm-dev. checking if upstream needs to be configured also...')
     // get this session data from mm
     const config = await configure.get()
     // pcce demo?
     if (config.demo === 'pcce') {
+      console.log('this is pcce demo, so set the upstream vertical also')
       // get vertical details from vertical ID
       const vertical = verticals.getOne(req.body.vertical)
       // set the vertical on the upstream customer using vertical name
       await upstream.setVertical(vertical.name)
+    } else {
+      console.log('this demo does not use Upstream, so not configuring vertical on that system')
     }
     return res.status(200).send(message)
   } catch (e) {
