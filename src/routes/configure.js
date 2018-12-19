@@ -18,6 +18,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+function capitalizeFirstLetter (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 // update demo configuration on mm and mm-dev
 router.post('/', async (req, res, next) => {
   try {
@@ -30,10 +34,17 @@ router.post('/', async (req, res, next) => {
     // pcce demo?
     if (config.demo === 'pcce') {
       console.log('this is pcce demo, so set the upstream vertical also')
-      // get vertical details from vertical ID
-      const vertical = verticals.getOne(req.body.vertical)
+      let verticalName = 'Finance'
+      try {
+        const verticalId = req.body.vertical
+        verticalName = capitalizeFirstLetter(verticalId)
+        console.log('Upstream vertical is', verticalName)
+      } catch (e) {
+        console.log('I think the vertical was not configured on this demo session. Using default of "Finance" for Upstream vertical.', e.message)
+      }
+      console.log('setting the Upstream vertical to', verticalName)
       // set the vertical on the upstream customer using vertical name
-      await upstream.setVertical(vertical.name)
+      await upstream.setVertical(verticalName)
     } else {
       console.log('this demo does not use Upstream, so not configuring vertical on that system')
     }
