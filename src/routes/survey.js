@@ -23,6 +23,13 @@ async function doSaveAnswers (req, res, next) {
       answers = req.query
     }
     console.log('request to save survey answers:', answers)
+
+    // validate
+    if (!answers.surveyId || !answers.q1 || !answers.q2 || !answers.ani) {
+      // invalid data
+      // return 400 bad input
+      return res.status(400).send('Please provide name, ani, surveyId, q1, q2 in the body or query parameters.')
+    }
     // post the incoming answers to the database
     const rows = await model.saveAnswers(answers)
     console.log('successfully saved survey answers')
