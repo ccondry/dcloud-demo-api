@@ -5,13 +5,13 @@ const redundantRequest = require('../models/redundant-request')
 // send SMS
 router.post('/', async (req, res, next) => {
   try {
-    console.log('request to create short link')
+    console.log('request to create send SMS:', req.query)
     const response = redundantRequest({
       url: '/api/v1/sms',
       method: 'POST',
       body: {
-        to: req.body.to,
-        body: req.body.body
+        to: req.query.to,
+        body: req.query.body
       },
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
