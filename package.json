@@ -1,6 +1,6 @@
 {
   "name": "demo-api",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "dCloud Contact Center demo API to save chat survey answers to survey database, send emails, and initiate callbacks",
   "main": "src/index.js",
   "scripts": {
