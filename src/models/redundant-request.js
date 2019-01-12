@@ -1,0 +1,26 @@
+const request = require('request-promise-native')
+
+// try 2 servers
+// get data from primary baseUrl1, and fall back to baseUrl2 if there is an error
+async function redundantRequest (options, baseUrl1, baseUrl2) {
+  options.baseUrl = baseUrl1
+
+  let response
+  try {
+    // get session config from primary
+    return await request(options)
+  } catch (e) {
+    console.log('failed request to', baseUrl1, e.message)
+    try {
+      // get session config from secondary
+      options.baseUrl = baseUrl2
+      return await request(options)
+    } catch (e2) {
+      console.log('failed request to', baseUrl2, e2.message)
+      // failed both
+      throw e2
+    }
+  }
+}
+
+module.exports = redundantRequest

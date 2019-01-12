@@ -1,18 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const request = require('request-promise-native')
+const redundantRequest = require('../models/redundant-request')
 
 // create short link
 router.post('/', async (req, res, next) => {
   try {
     console.log('request to create short link')
-    const response = await request({
-      baseUrl: 'bit.ly',
-      url: '/api/v4',
-      body: {
-        url: req.body.url
-      }
-    })
+    const response = redundantRequest({
+      url: '/api/v1/link',
+      method: 'POST',
+      body: {url: req.body.url},
+      json: true
+    }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
     return res.status(200).send(response)
   } catch (e) {
     // failed
