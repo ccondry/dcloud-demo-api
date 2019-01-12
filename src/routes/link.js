@@ -3,7 +3,7 @@ const router = express.Router()
 const redundantRequest = require('../models/redundant-request')
 
 // create short link
-router.post('/', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     console.log('request to create short link:', req.query)
     const response = await redundantRequest({
