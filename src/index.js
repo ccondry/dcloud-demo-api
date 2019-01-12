@@ -33,6 +33,10 @@ app.use('/api/v1/configure', require('./routes/configure'))
 app.use('/api/v1/cumulus', require('./routes/cumulus'))
 // create or modify upstream contact IDs (customers)
 app.use('/api/v1/upstream', require('./routes/upstream'))
+// create short link
+app.use('/api/v1/link', require('./routes/link'))
+// send SMS
+app.use('/api/v1/sms', require('./routes/sms'))
 
 /*****************
 External Endpoints
@@ -51,8 +55,6 @@ app.use('/api/v1/status', require('./routes/status'))
 app.use('/api/v1/verticals', require('./routes/verticals'))
 // get mobile app answers
 app.use('/api/v1/answers', require('./routes/answers'))
-// create short link
-app.use('/api/v1/link', require('./routes/link'))
 
 // log 404
 app.use((req, res, next) => {
