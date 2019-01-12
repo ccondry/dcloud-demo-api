@@ -5,12 +5,12 @@ const redundantRequest = require('../models/redundant-request')
 // create short link
 router.post('/', async (req, res, next) => {
   try {
-    console.log('request to create short link', req.body, req.query)
+    console.log('request to create short link:', req.query)
     const response = await redundantRequest({
       url: '/api/v1/link',
       method: 'POST',
       body: {
-        url: req.body.url
+        url: req.query.url
       },
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
