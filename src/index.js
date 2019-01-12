@@ -51,6 +51,8 @@ app.use('/api/v1/status', require('./routes/status'))
 app.use('/api/v1/verticals', require('./routes/verticals'))
 // get mobile app answers
 app.use('/api/v1/answers', require('./routes/answers'))
+// create short link
+app.use('/api/v1/link', require('./routes/link'))
 
 // log 404
 app.use((req, res, next) => {
