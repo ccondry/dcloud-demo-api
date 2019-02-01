@@ -2,6 +2,16 @@ const fs = require('fs')
 const request = require('request-promise-native')
 const session = require('./session')
 
+const defaultConfiguration = {
+  chatBotEnabled: true,
+  chatBotSurveyEnabled: true,
+  chatBotToken: "5dc044d7822d43a5839627427ed28935",
+  language: "en",
+  multichannel: "ece",
+  region: "US",
+  vertical: "finance"
+}
+
 async function getConfig () {
   let json
   try {
@@ -24,10 +34,10 @@ async function getConfig () {
   try {
     // get session config from mm
     const r = await request(options)
-    // make sure there is configuration property
-    r.configuration = r.configuration || {}
-    // make sure there is a configuration.vertical property, or default it to finance
-    r.configuration.vertical = r.configuration.vertical || 'finance'
+    // if no configuration set for this session, fill in the default
+    if (!r.configuration) {
+      r.configuration = defaultConfiguration
+    }
     return r
   } catch (e) {
     console.log('failed to get session config from', process.env.MM_API_1, e.message)
@@ -35,10 +45,10 @@ async function getConfig () {
       // get session config from mm-dev
       options.baseUrl = process.env.MM_API_2
       const r2 = await request(options)
-      // make sure there is configuration property
-      r2.configuration = r2.configuration || {}
-      // make sure there is a configuration.vertical property, or default it to finance
-      r2.configuration.vertical = r2.configuration.vertical || 'finance'
+      // if no configuration set for this session, fill in the default
+      if (!r2.configuration) {
+        r2.configuration = defaultConfiguration
+      }
       return r2
     } catch (e2) {
       console.log('failed to get session config from', process.env.MM_API_2, e2.message)
