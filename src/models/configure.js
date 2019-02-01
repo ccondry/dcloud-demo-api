@@ -23,23 +23,13 @@ async function getConfig () {
   let response
   try {
     // get session config from mm
-    const r = await request(options)
-    // make sure there is configuration property
-    r.configuration = r.configuration || {}
-    // make sure there is a configuration.vertical property, or default it to finance
-    r.configuration.vertical = r.configuration.vertical || 'finance'
-    return r
+    return await request(options)
   } catch (e) {
     console.log('failed to get session config from', process.env.MM_API_1, e.message)
     try {
       // get session config from mm-dev
       options.baseUrl = process.env.MM_API_2
-      const r2 = await request(options)
-      // make sure there is configuration property
-      r2.configuration = r2.configuration || {}
-      // make sure there is a configuration.vertical property, or default it to finance
-      r2.configuration.vertical = r2.configuration.vertical || 'finance'
-      return r2
+      return await request(options)
     } catch (e2) {
       console.log('failed to get session config from', process.env.MM_API_2, e2.message)
       // failed both
