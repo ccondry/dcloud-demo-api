@@ -37,6 +37,9 @@ async function getConfig () {
     // if no configuration set for this session, fill in the default
     if (!r.configuration) {
       r.configuration = defaultConfiguration
+      if (r.demo === 'pcce') {
+        r.multichannel = 'ece'
+      }
     }
     return r
   } catch (e) {
@@ -48,6 +51,9 @@ async function getConfig () {
       // if no configuration set for this session, fill in the default
       if (!r2.configuration) {
         r2.configuration = defaultConfiguration
+        if (r.demo === 'pcce') {
+          r.multichannel = 'ece'
+        }
       }
       return r2
     } catch (e2) {
