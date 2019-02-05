@@ -38,7 +38,9 @@ async function getConfig () {
     if (!r.configuration) {
       r.configuration = defaultConfiguration
       if (r.demo === 'pcce') {
-        r.multichannel = 'ece'
+        r.configuration.multichannel = 'ece'
+      } else if (r.demo === 'uccx') {
+        // r.configuration.multichannel = 'uccx'
       }
     }
     return r
@@ -50,9 +52,11 @@ async function getConfig () {
       const r2 = await request(options)
       // if no configuration set for this session, fill in the default
       if (!r2.configuration) {
-        r2.configuration = defaultConfiguration
+        r.configuration = defaultConfiguration
         if (r.demo === 'pcce') {
-          r.multichannel = 'ece'
+          r.configuration.multichannel = 'ece'
+        } else if (r.demo === 'uccx') {
+          // r.configuration.multichannel = 'uccx'
         }
       }
       return r2
