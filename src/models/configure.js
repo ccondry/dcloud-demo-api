@@ -47,10 +47,10 @@ async function getConfig (username) {
         const r2 = await request(options)
         // if no configuration set for this session, fill in the default
         if (!r2.configuration) {
-          r.configuration = cumulus.getConfig()
-          if (r.demo === 'pcce') {
-            r.configuration.multichannel = 'ece'
-          } else if (r.demo === 'uccx') {
+          r2.configuration = cumulus.getConfig()
+          if (r2.demo === 'pcce') {
+            r2.configuration.multichannel = 'ece'
+          } else if (r2.demo === 'uccx') {
             // r.configuration.multichannel = 'uccx'
           }
         }
