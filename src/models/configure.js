@@ -13,10 +13,15 @@ const defaultConfiguration = {
 }
 
 async function getConfig (username) {
+  if (username) {
+    console.log('getting session configuration for', username)
+  } else {
+    console.log('getting session configuration')
+  }
   let json
   try {
     json = await session.get()
-    console.log('loaded session.xml file. session', json.session.id, 'in datacenter', json.session.datacenter)
+    console.log('got session.xml data. session', json.session.id, 'in datacenter', json.session.datacenter)
   } catch (e) {
     console.log('failed to get session config from local session.xml file:', e)
     throw e
