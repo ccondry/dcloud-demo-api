@@ -19,9 +19,9 @@ async function getConfig (username) {
     console.log('getting session configuration')
   }
   let json = session.get()
-  console.log('got session.xml data. session', json.session.id, 'in datacenter', json.session.datacenter)
+  console.log('got session.xml data. session', json.id, 'in datacenter', json.datacenter)
   // url path
-  const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
+  const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
 
   const options = {
     baseUrl: process.env.MM_API_1,
@@ -78,10 +78,10 @@ async function patchConfig (body) {
     // REST method
     const method = 'PATCH'
     // url path
-    const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
+    const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
     // basic auth is the anyconnect username and password for this dcloud session
-    const username = `v${json.session.vpod}user1`
-    const basicAuth = Buffer.from(`${username}:${json.session.anycpwd}`).toString('base64')
+    const username = `v${json.vpod}user1`
+    const basicAuth = Buffer.from(`${username}:${json.anycpwd}`).toString('base64')
     const options = {
       baseUrl: process.env.MM_API_1,
       method,
