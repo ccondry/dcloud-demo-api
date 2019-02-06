@@ -18,14 +18,8 @@ async function getConfig (username) {
   } else {
     console.log('getting session configuration')
   }
-  let json
-  try {
-    json = await session.get()
-    console.log('got session.xml data. session', json.session.id, 'in datacenter', json.session.datacenter)
-  } catch (e) {
-    console.log('failed to get session config from local session.xml file:', e)
-    throw e
-  }
+  let json = session.get()
+  console.log('got session.xml data. session', json.session.id, 'in datacenter', json.session.datacenter)
   // url path
   const url = `/api/v1/datacenters/${json.session.datacenter}/sessions/${json.session.id}`
 
