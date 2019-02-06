@@ -6,10 +6,17 @@ const upstream = require('../models/upstream')
 
 // get current demo configuration from mm or mm-dev
 router.get('/', async (req, res, next) => {
+  let username
+  try {
+    // get username from query params
+    username = req.query.username
+  } catch (e) {
+    // continue
+  }
   try {
     console.log('request to get demo configuration')
     // get session config
-    const config = await configure.get()
+    const config = await configure.get(username)
     return res.status(200).send(config)
   } catch (e) {
     // failed

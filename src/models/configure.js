@@ -12,7 +12,7 @@ const defaultConfiguration = {
   vertical: "finance"
 }
 
-async function getConfig () {
+async function getConfig (username) {
   let json
   try {
     json = await session.get()
@@ -28,6 +28,10 @@ async function getConfig () {
     baseUrl: process.env.MM_API_1,
     url,
     json: true
+  }
+  // add username if it was provided
+  if (username) {
+    qs.username = username
   }
 
   let response
