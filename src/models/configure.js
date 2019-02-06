@@ -16,7 +16,7 @@ const defaultConfiguration = {
 async function getConfig (username) {
   if (username) {
     console.log('getting session configuration for', username)
-    const configuration = cumulus.getConfig(username)
+    const configuration = await cumulus.getConfig(username)
     return {configuration}
   } else {
     console.log('getting session configuration')
