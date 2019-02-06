@@ -2,15 +2,6 @@ const fs = require('fs')
 const request = require('request-promise-native')
 const session = require('./session')
 const cumulus = require('./cumulus')
-// const defaultConfiguration = {
-//   chatBotEnabled: true,
-//   chatBotSurveyEnabled: true,
-//   chatBotToken: "5dc044d7822d43a5839627427ed28935",
-//   language: "en",
-//   // multichannel: "ece",
-//   region: "US",
-//   vertical: "finance"
-// }
 
 async function getConfig (username) {
   const instantDemo = process.env.INSTANT_DEMO === 'true'
@@ -40,7 +31,7 @@ async function getConfig (username) {
       const r = await request(options)
       // if no configuration set for this session, fill in the default
       if (!r.configuration) {
-        r.configuration = defaultConfiguration
+        r.configuration = cumulus.getConfig()
         if (r.demo === 'pcce') {
           r.configuration.multichannel = 'ece'
         } else if (r.demo === 'uccx') {
@@ -56,7 +47,7 @@ async function getConfig (username) {
         const r2 = await request(options)
         // if no configuration set for this session, fill in the default
         if (!r2.configuration) {
-          r.configuration = defaultConfiguration
+          r.configuration = cumulus.getConfig()
           if (r.demo === 'pcce') {
             r.configuration.multichannel = 'ece'
           } else if (r.demo === 'uccx') {
