@@ -30,7 +30,7 @@ async function getConfig (username) {
   }
   // add username if it was provided
   if (username) {
-    qs.username = username
+    options.qs = {username}
   }
 
   let response
