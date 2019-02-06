@@ -1,60 +1,45 @@
 const fs = require('fs')
 const request = require('request-promise-native')
 const session = require('./session')
-
-const defaultConfiguration = {
-  chatBotEnabled: true,
-  chatBotSurveyEnabled: true,
-  chatBotToken: "5dc044d7822d43a5839627427ed28935",
-  language: "en",
-  // multichannel: "ece",
-  region: "US",
-  vertical: "finance"
-}
+const cumulus = require('./cumulus')
+// const defaultConfiguration = {
+//   chatBotEnabled: true,
+//   chatBotSurveyEnabled: true,
+//   chatBotToken: "5dc044d7822d43a5839627427ed28935",
+//   language: "en",
+//   // multichannel: "ece",
+//   region: "US",
+//   vertical: "finance"
+// }
 
 async function getConfig (username) {
-  if (username) {
+  const instantDemo = process.env.INSTANT_DEMO === 'true'
+  if (instantDemo && username) {
     console.log('getting session configuration for', username)
+    // get session info from xml file
+    const json = session.get()
+    // get configuration data from local database and add to session info
+    json.configuration = cumulus.getConfig(username)
+    // return combined data
+    return json
   } else {
     console.log('getting session configuration')
-  }
-  let json = session.get()
-  console.log('got session.xml data. session', json.id, 'in datacenter', json.datacenter)
-  // url path
-  const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
+    let json = session.get()
+    console.log('got session.xml data. session', json.id, 'in datacenter', json.datacenter)
+    // url path
+    const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
 
-  const options = {
-    baseUrl: process.env.MM_API_1,
-    url,
-    json: true
-  }
-  // add username if it was provided
-  if (username) {
-    options.qs = {username}
-  }
-
-  let response
-  try {
-    // get session config from mm
-    const r = await request(options)
-    // if no configuration set for this session, fill in the default
-    if (!r.configuration) {
-      r.configuration = defaultConfiguration
-      if (r.demo === 'pcce') {
-        r.configuration.multichannel = 'ece'
-      } else if (r.demo === 'uccx') {
-        // r.configuration.multichannel = 'uccx'
-      }
+    const options = {
+      baseUrl: process.env.MM_API_1,
+      url,
+      json: true
     }
-    return r
-  } catch (e) {
-    console.log('failed to get session config from', process.env.MM_API_1, e.message)
+    let response
     try {
-      // get session config from mm-dev
-      options.baseUrl = process.env.MM_API_2
-      const r2 = await request(options)
+      // get session config from mm
+      const r = await request(options)
       // if no configuration set for this session, fill in the default
-      if (!r2.configuration) {
+      if (!r.configuration) {
         r.configuration = defaultConfiguration
         if (r.demo === 'pcce') {
           r.configuration.multichannel = 'ece'
@@ -62,11 +47,28 @@ async function getConfig (username) {
           // r.configuration.multichannel = 'uccx'
         }
       }
-      return r2
-    } catch (e2) {
-      console.log('failed to get session config from', process.env.MM_API_2, e2.message)
-      // failed both
-      throw e2
+      return r
+    } catch (e) {
+      console.log('failed to get session config from', process.env.MM_API_1, e.message)
+      try {
+        // get session config from mm-dev
+        options.baseUrl = process.env.MM_API_2
+        const r2 = await request(options)
+        // if no configuration set for this session, fill in the default
+        if (!r2.configuration) {
+          r.configuration = defaultConfiguration
+          if (r.demo === 'pcce') {
+            r.configuration.multichannel = 'ece'
+          } else if (r.demo === 'uccx') {
+            // r.configuration.multichannel = 'uccx'
+          }
+        }
+        return r2
+      } catch (e2) {
+        console.log('failed to get session config from', process.env.MM_API_2, e2.message)
+        // failed both
+        throw e2
+      }
     }
   }
 }
