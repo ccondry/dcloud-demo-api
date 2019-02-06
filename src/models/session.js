@@ -1,26 +1,33 @@
+/**
+This loads the session.xml file that is created by the dCloud topology
+**/
+
 const fs = require('fs')
-const xml2js = require('xml2js')
-const util = require('util')
+const parser = require('xml2json')
 
-// set default xml to json parsing params
-const parser = new xml2js.Parser({explicitArray : false})
+let session = {}
 
-// make some promises
-const readFile = util.promisify(fs.readFile)
-const parseString = util.promisify(parser.parseString)
+const sessionFile = process.env.SESSION_XML_FILE || '/dcloud/session.xml'
 
-async function getSessionJson () {
-  try {
-    // read the dcloud session.xml file
-    const xml = await readFile(process.env.SESSION_XML_FILE || '/dcloud/session.xml')
-    // parse session.xml to json object
-    const json = await parseString(xml)
-    return json
-  } catch (e) {
-    throw e
-  }
+function readSessionFile () {
+  // read the dcloud session file and return the contents of the DIDs section
+  fs.readFile(sessionFile, function (err, data) {
+    if (err) return console.error(err)
+    // parse xml to json object
+    const json = JSON.parse(parser.toJson(data))
+    // extract the DIDs array
+    session = json.session
+  })
 }
 
+// read session file now
+readSessionFile()
+
+// re-read the session file every 5 minutes, to make sure we have the latest data
+const interval = setInterval(readSessionFile, 1000 * 60 * 5)
+
 module.exports = {
-  get: getSessionJson
+  get () {
+    return session
+  }
 }
