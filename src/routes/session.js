@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
     // parse session.xml to json object
     const json = await session.get()
     // return data
-    return res.status(200).send(json.session)
+    return res.status(200).send(json)
   } catch (e) {
     console.error('failed to get session data', e.message)
     return res.status(500).send(e.message)
