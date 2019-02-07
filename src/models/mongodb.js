@@ -5,11 +5,17 @@ require('dotenv').load()
 
 const url = process.env.MONGO_URL || 'mongodb://localhost:27017/toolbox'
 
+// connection global
 let db
+
 // connect
 MongoClient.connect(url, function(connectError, connection) {
-  if (connectError || connection === null) throw('could not connect to mongo db.', connectError)
+  if (connectError || connection === null) {
+    console.log('could not connect to mongo db.', connectError)
+    return
+  }
   console.log('mongo connected to', url)
+  // store connection
   db = connection
 })
 
