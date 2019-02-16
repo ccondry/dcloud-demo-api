@@ -9,7 +9,7 @@ router.use('/auth', async (req, res, next) => {
     const response = redundantRequest({
       url: '/api/v1/duo/auth',
       method: req.method,
-      query: req.query,
+      qs: req.query,
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
     return res.status(200).send(response)
