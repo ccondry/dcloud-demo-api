@@ -3,7 +3,7 @@ const router = express.Router()
 const redundantRequest = require('../models/redundant-request')
 
 // duo auth - forward to cs-manager server pair
-router.use('/*', async (req, res, next) => {
+router.use('/auth', async (req, res, next) => {
   try {
     console.log('request to', req.method, req.path, ' - send Duo Security request. query:', req.query)
     const response = redundantRequest({
