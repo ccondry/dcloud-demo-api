@@ -6,7 +6,7 @@ const redundantRequest = require('../models/redundant-request')
 router.use('/auth', async (req, res, next) => {
   try {
     console.log('request to', req.method, req.path, ' - send Duo Security request. query:', req.query)
-    const response = redundantRequest({
+    const response = await redundantRequest({
       url: '/api/v1/duo/auth',
       method: req.method,
       qs: req.query,
