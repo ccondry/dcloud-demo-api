@@ -16,10 +16,10 @@ const defaults = {
 }
 
 // get user's Cumulus config from database
-async function getConfig (username) {
+async function getConfig (userId) {
   try {
     // look up user config in database
-    const config = await db.findOne('cumulus.config', {username}, {_id: 0})
+    const config = await db.findOne('cumulus.config', {userId}, {_id: 0})
     // return config if it exists
     if (config) return config
     // return default config since user config did not exist
@@ -31,9 +31,9 @@ async function getConfig (username) {
 }
 
 // insert or replace user config in database
-function saveConfig (username, config) {
-  config.username = username
-  return db.upsert('cumulus.config', {username}, config)
+function saveConfig (userId, config) {
+  config.userId = userId
+  return db.upsert('cumulus.config', {userId}, config)
 }
 
 module.exports = {
