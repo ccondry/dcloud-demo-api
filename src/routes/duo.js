@@ -7,9 +7,8 @@ router.use('/auth', async (req, res, next) => {
   try {
     console.log('request to', req.method, req.path, ' - send Duo Security request. query:', req.query)
     const response = redundantRequest({
-      url: req.path,
+      url: '/api/v1/duo/auth',
       method: req.method,
-      body: req.body,
       query: req.query,
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
