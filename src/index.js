@@ -55,6 +55,8 @@ app.use('/api/v1/status', require('./routes/status'))
 app.use('/api/v1/verticals', require('./routes/verticals'))
 // get mobile app answers
 app.use('/api/v1/answers', require('./routes/answers'))
+// Duo Security 2FA
+app.use('/api/v1/duo', require('./routes/duo'))
 
 // log 404
 app.use((req, res, next) => {
