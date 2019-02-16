@@ -13,10 +13,10 @@ const defaultConfiguration = {
   vertical: "finance"
 }
 
-async function getConfig (username) {
-  if (username) {
-    console.log('getting session configuration for', username)
-    const configuration = await cumulus.getConfig(username)
+async function getConfig (userId) {
+  if (userId) {
+    console.log('getting session configuration for', userId)
+    const configuration = await cumulus.getConfig(userId)
     return {configuration}
   } else {
     console.log('getting session configuration')
@@ -30,9 +30,9 @@ async function getConfig (username) {
       url,
       json: true
     }
-    // add username if it was provided
-    if (username) {
-      options.qs = {username}
+    // add userId if it was provided
+    if (userId) {
+      options.qs = {userId}
     }
 
     let response
