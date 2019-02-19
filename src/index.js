@@ -57,6 +57,8 @@ app.use('/api/v1/verticals', require('./routes/verticals'))
 app.use('/api/v1/answers', require('./routes/answers'))
 // Duo Security 2FA
 app.use('/api/v1/duo', require('./routes/duo'))
+// PQ Training Certification attribute updater
+app.use('/api/v1/certification', require('./routes/certification'))
 
 // log 404
 app.use((req, res, next) => {
