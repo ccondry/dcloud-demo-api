@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const model = require('../models/answers')
 const session = require('../models/session')
+const redundantRequest = require('../models/redundant-request')
 
 // get mobile app answers from mm or mm-dev
 router.get('/:id', async (req, res, next) => {
