@@ -24,7 +24,7 @@ function updateAgent (data) {
     auth,
     body: xml,
     headers: {
-      'Authorization': 'Basic ' + basicAuth
+      'Authorization': 'Basic ' + basicAuth,
       'Content-Type': 'application/xml'
     }
   })
