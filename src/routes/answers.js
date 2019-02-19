@@ -21,7 +21,7 @@ router.get('/:id', async (req, res, next) => {
 // save mobile app answers to mm and mm-dev
 router.put('/:ani', async (req, res, next) => {
   try {
-    console.log('request to save mobile app answers for', req.params.id)
+    console.log('request to save mobile app answers for', req.params.ani)
     // get datacenter and session ID from session.xml file
     const json = await session.get()
     // save answers
@@ -39,7 +39,7 @@ router.put('/:ani', async (req, res, next) => {
     return res.status(202).send(response)
   } catch (e) {
     // failed
-    console.error('failed to save mobile app answers for', req.params.id, ':', e.message)
+    console.error('failed to save mobile app answers for', req.params.ani, ':', e.message)
     return res.status(500).send(e.message)
   }
 })
