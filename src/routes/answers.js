@@ -35,6 +35,7 @@ router.put('/:ani', async (req, res, next) => {
       },
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
+    console.log('successfully saved mobile app answers for', req.params.ani)
     // return CREATED
     return res.status(202).send(response)
   } catch (e) {
