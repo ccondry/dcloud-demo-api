@@ -6,14 +6,15 @@ if (!process.env.CCE_HOST) console.warn('process.env.CCE_HOST not configured')
 if (!process.env.CCE_USERNAME) console.warn('process.env.CCE_USERNAME not configured')
 if (!process.env.CCE_PASSWORD) console.warn('process.env.CCE_PASSWORD not configured')
 
-// const auth = {
-  //   user: process.env.CCE_USERNAME,
-  //   pass: process.env.CCE_PASSWORD,
-  //   sendImmediately: true
-  // }
+const auth = {
+  user: process.env.CCE_USERNAME,
+  pass: process.env.CCE_PASSWORD,
+  sendImmediately: true
+}
 
 // construct Basic auth string for request
-const basicAuth = Buffer.from(`${process.env.CCE_USERNAME}:${process.env.CCE_PASSWORD}`).toString('base64')
+// const basicAuth = Buffer.from(`${process.env.CCE_USERNAME}:${process.env.CCE_PASSWORD}`).toString('base64')
+
 // API URL base
 const baseUrl = `https://${process.env.CCE_HOST}/unifiedconfig/config/agent/`
 
@@ -27,12 +28,12 @@ function updateAgent (data) {
     method: 'PUT',
     baseUrl,
     url: dbid,
-    // auth,
-    body: xml,
-    headers: {
-      'Authorization': 'Basic ' + basicAuth,
-      'Content-Type': 'application/xml'
-    }
+    auth,
+    body: xml
+    // headers: {
+    //   'Authorization': 'Basic ' + basicAuth,
+    //   'Content-Type': 'application/xml'
+    // }
   })
 }
 
