@@ -105,4 +105,4 @@ async function go (dbid, grade) {
   }
 }
 
-modules.export = go
+module.exports = go
