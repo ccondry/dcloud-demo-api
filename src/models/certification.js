@@ -67,11 +67,10 @@ function updateAgent (data) {
     baseUrl,
     url: dbid,
     auth,
-    body: xml
-    // headers: {
-    //   'Authorization': 'Basic ' + basicAuth,
-    //   'Content-Type': 'application/xml'
-    // }
+    body: xml,
+    headers: {
+      'Content-Type': 'application/xml'
+    }
   })
 }
 
@@ -95,6 +94,7 @@ async function getAgent (dbid) {
 // update certification attribute on agent 'dbid' to 'grade'
 async function setCertificationGrade (dbid, grade) {
   const agent = await getAgent(dbid)
+  // console.log('got agent', agent)
   const newAttribute = {
     attributeValue: grade,
     attribute: {
