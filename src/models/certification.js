@@ -6,6 +6,8 @@ if (!process.env.CCE_HOST) console.warn('process.env.CCE_HOST not configured')
 if (!process.env.CCE_USERNAME) console.warn('process.env.CCE_USERNAME not configured')
 if (!process.env.CCE_PASSWORD) console.warn('process.env.CCE_PASSWORD not configured')
 
+if (!process.env.CERTIFICATION_ATTRIBUTE_ID) console.warn('process.env.CERTIFICATION_ATTRIBUTE_ID not configured')
+
 const auth = {
   user: process.env.CCE_USERNAME,
   pass: process.env.CCE_PASSWORD,
