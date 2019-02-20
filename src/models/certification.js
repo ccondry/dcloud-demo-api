@@ -12,11 +12,49 @@ const auth = {
   sendImmediately: true
 }
 
-// construct Basic auth string for request
-// const basicAuth = Buffer.from(`${process.env.CCE_USERNAME}:${process.env.CCE_PASSWORD}`).toString('base64')
-
 // API URL base
 const baseUrl = `https://${process.env.CCE_HOST}/unifiedconfig/config/agent/`
+
+// export function
+module.exports = async function (agentId, grade) {
+  try {
+    const dbid = await getAgentDbId(agentId)
+    await setCertificationGrade(dbid, grade)
+  } catch (e) {
+    throw e
+  }
+}
+
+// find agent DB ID for agent ID
+async function getAgentDbId (agentId) {
+  try {
+    const response = await request({
+      method: 'GET',
+      url: baseUrl,
+      qs: {q: agentId},
+      auth
+    })
+    const json = parser.xml2js(response)
+    const agents = json.results.agents.agent
+    let agent
+    // did we find more than one agent matching our query?
+    if (Array.isArray(agents)) {
+      // find the agent matching exactly the agent ID
+      agent = agents.find(v => {
+        return v.agentId === agentId
+      })
+    } else if (agents.agentId === agentId) {
+      // only one agent found - our agent
+      agent = agents
+    } else {
+      throw Error(`Couldn't find exact agent ID match for ${agentId}.`)
+    }
+    const dbid = agent.refURL.split('/').pop()
+    return dbid
+  } catch (e) {
+    throw e
+  }
+}
 
 function updateAgent (data) {
   // extract dbid from agent refURL
@@ -55,7 +93,7 @@ async function getAgent (dbid) {
 }
 
 // update certification attribute on agent 'dbid' to 'grade'
-async function go (dbid, grade) {
+async function setCertificationGrade (dbid, grade) {
   const agent = await getAgent(dbid)
   const newAttribute = {
     attributeValue: grade,
@@ -110,5 +148,3 @@ async function go (dbid, grade) {
     }
   }
 }
-
-module.exports = go
