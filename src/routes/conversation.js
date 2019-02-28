@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     if (
       !req.query ||
       !req.query.transcript ||
-      !req.query.transcript.replace(/\+/g, '').length
+      !req.query.transcript.replace(/\+/g, '').trim().length
     ) {
       // return empty result for invalid input
       return res.status(200).send({outputText: ''})
