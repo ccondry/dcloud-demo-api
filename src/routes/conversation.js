@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
       token: req.query.token
     })
     const body = {
-      outputText: rsp.outputText,
+      outputText: rsp.outputText.replace(/[\'\"\!\,\?]/g, ''),
       action: rsp.action,
       actionIncomplete: rsp.actionIncomplete
     }
