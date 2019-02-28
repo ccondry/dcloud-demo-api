@@ -24,13 +24,14 @@ router.get('/', async (req, res) => {
       lang: req.query.language,
       token: req.query.token
     })
-    console.log('conversational IVR - returning', rsp )
-    // send only relevant data, and don't send any arrays?
-    return res.status(200).send({
+    const body = {
       outputText: rsp.outputText,
       action: rsp.action,
       actionIncomplete: rsp.actionIncomplete
-    })
+    }
+    console.log('conversational IVR - returning', body)
+    // send only relevant data, and don't send any arrays?
+    return res.status(200).send(body)
   } catch (error) {
     console.log('failed to get conversational IVR transcript AI response:', error.message)
     return res.status(500).send(error.message)
