@@ -43,10 +43,10 @@ module.exports = async function ({
       ret += message.speech + ' '
     }
   }
-  
+
   const result = rsp.result
   // attach compiled speech text onto the response
-  result.outputText = ret
+  result.outputText = ret.trim()
 
   // return the modified response
   return result
