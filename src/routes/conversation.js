@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       // return empty result for invalid input
       return res.status(200).send({outputText: ''})
     }
-    console.log('doing conversational IVR request for query', req.query.transcript)
+    console.log('doing conversational IVR request for query = `' + req.query.transcript + '`')
     const rsp = await model({
       q: req.query.transcript,
       sessionId: req.query.sessionId,
