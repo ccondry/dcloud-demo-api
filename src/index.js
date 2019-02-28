@@ -37,6 +37,12 @@ app.use('/api/v1/upstream', require('./routes/upstream'))
 app.use('/api/v1/link', require('./routes/link'))
 // send SMS
 app.use('/api/v1/sms', require('./routes/sms'))
+// Duo Security 2FA
+app.use('/api/v1/duo', require('./routes/duo'))
+// PQ Training Certification attribute updater
+app.use('/api/v1/certification', require('./routes/certification'))
+// Conversational IVR
+app.use('/api/v1/conversation', require('./routes/conversation'))
 
 /*****************
 External Endpoints
@@ -55,10 +61,6 @@ app.use('/api/v1/status', require('./routes/status'))
 app.use('/api/v1/verticals', require('./routes/verticals'))
 // get mobile app answers
 app.use('/api/v1/answers', require('./routes/answers'))
-// Duo Security 2FA
-app.use('/api/v1/duo', require('./routes/duo'))
-// PQ Training Certification attribute updater
-app.use('/api/v1/certification', require('./routes/certification'))
 
 // log 404
 app.use((req, res, next) => {
