@@ -6,9 +6,8 @@ let host
 if (process.env.MM_BRAND_URL) {
   host = process.env.MM_BRAND_URL
 } else {
-  const default = 'https://mm-brand.cxdemo.net'
-  console.warn('process.env.MM_BRAND_URL is not configured. defaulting to', default)
-  host = default
+  console.warn('process.env.MM_BRAND_URL is not configured. defaulting to', 'https://mm-brand.cxdemo.net')
+  host = 'https://mm-brand.cxdemo.net'
 }
 // forward client to brand website
 router.get('/', async (req, res, next) => {
