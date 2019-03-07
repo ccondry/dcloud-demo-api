@@ -31,6 +31,8 @@ app.use('/api/v1/endpoints', require('./routes/endpoints'))
 app.use('/api/v1/configure', require('./routes/configure'))
 // forward client to cumulus website with session ID and datacenter prefilled
 app.use('/api/v1/cumulus', require('./routes/cumulus'))
+// forward client to brand website with session ID and datacenter prefilled
+app.use('/api/v1/brand', require('./routes/brand'))
 // create or modify upstream contact IDs (customers)
 app.use('/api/v1/upstream', require('./routes/upstream'))
 // create short link
