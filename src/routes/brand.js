@@ -7,7 +7,7 @@ if (process.env.MM_BRAND_URL) {
   host = process.env.MM_BRAND_URL
 } else {
   const default = 'https://mm-brand.cxdemo.net'
-  console.log('process.env.MM_BRAND_URL is not configured. defaulting to', default)
+  console.warn('process.env.MM_BRAND_URL is not configured. defaulting to', default)
   host = default
 }
 // forward client to brand website
