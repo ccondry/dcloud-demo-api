@@ -50,7 +50,7 @@ async function getConfig (userId) {
       }
       if (r.demo === 'uccx') {
         // only return the vertical ID
-        return {vertical: r.vertical}
+        return {vertical: r.configuration.vertical}
       } else {
         return r
       }
@@ -71,7 +71,7 @@ async function getConfig (userId) {
         }
         if (r2.demo === 'uccx') {
           // only return the vertical ID
-          return {vertical: r2.vertical}
+          return {vertical: r2.configuration.vertical}
         } else {
           return r2
         }
