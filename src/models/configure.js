@@ -48,12 +48,7 @@ async function getConfig (userId) {
           // r.configuration.multichannel = 'uccx'
         }
       }
-      if (r.demo === 'uccx') {
-        return res.set("Content-Type", "application/json; charset=utf-8")
-        .send(JSON.stringify(r, null, 2))
-      } else {
-        return r
-      }
+      return r
     } catch (e) {
       console.log('failed to get session config from', process.env.MM_API_1, e.message)
       try {
@@ -69,13 +64,7 @@ async function getConfig (userId) {
             // r.configuration.multichannel = 'uccx'
           }
         }
-        if (r2.demo === 'uccx') {
-          // only return the vertical ID
-          return res.set("Content-Type", "application/json; charset=utf-8")
-          .send(JSON.stringify(r2, null, 2))
-        } else {
-          return r2
-        }
+        return r2
       } catch (e2) {
         console.log('failed to get session config from', process.env.MM_API_2, e2.message)
         // failed both
