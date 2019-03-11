@@ -48,7 +48,12 @@ async function getConfig (userId) {
           // r.configuration.multichannel = 'uccx'
         }
       }
-      return r
+      if (r.demo === 'uccx') {
+        // only return the vertical ID
+        return {vertical: r.vertical}
+      } else {
+        return r
+      }
     } catch (e) {
       console.log('failed to get session config from', process.env.MM_API_1, e.message)
       try {
@@ -57,14 +62,19 @@ async function getConfig (userId) {
         const r2 = await request(options)
         // if no configuration set for this session, fill in the default
         if (!r2.configuration) {
-          r.configuration = defaultConfiguration
-          if (r.demo === 'pcce') {
-            r.configuration.multichannel = 'ece'
-          } else if (r.demo === 'uccx') {
+          r2.configuration = defaultConfiguration
+          if (r2.demo === 'pcce') {
+            r2.configuration.multichannel = 'ece'
+          } else if (r2.demo === 'uccx') {
             // r.configuration.multichannel = 'uccx'
           }
         }
-        return r2
+        if (r2.demo === 'uccx') {
+          // only return the vertical ID
+          return {vertical: r2.vertical}
+        } else {
+          return r2
+        }
       } catch (e2) {
         console.log('failed to get session config from', process.env.MM_API_2, e2.message)
         // failed both
