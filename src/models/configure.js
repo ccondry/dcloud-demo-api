@@ -49,8 +49,8 @@ async function getConfig (userId) {
         }
       }
       if (r.demo === 'uccx') {
-        // only return the vertical ID
-        return {vertical: r.configuration.vertical}
+        return res.set("Content-Type", "application/json; charset=utf-8")
+        .send(JSON.stringify(r, null, 2))
       } else {
         return r
       }
@@ -71,7 +71,8 @@ async function getConfig (userId) {
         }
         if (r2.demo === 'uccx') {
           // only return the vertical ID
-          return {vertical: r2.configuration.vertical}
+          return res.set("Content-Type", "application/json; charset=utf-8")
+          .send(JSON.stringify(r2, null, 2))
         } else {
           return r2
         }
