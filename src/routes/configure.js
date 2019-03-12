@@ -17,12 +17,7 @@ router.get('/', async (req, res, next) => {
     console.log('request to get demo configuration')
     // get session config
     const config = await configure.get(userId)
-    if (config.demo === 'uccx') {
-      return res.set("Content-Type", "application/json; charset=utf-8")
-      .send(JSON.stringify(config, null, 2))
-    } else {
-      return res.status(200).send(config)
-    }
+    return res.status(200).send(config)
   } catch (e) {
     // failed
     console.error('failed to get dCloud demo session configuration:', e.message)
