@@ -39,6 +39,8 @@ app.use('/api/v1/upstream', require('./routes/upstream'))
 app.use('/api/v1/link', require('./routes/link'))
 // send SMS
 app.use('/api/v1/sms', require('./routes/sms'))
+// send WhatsApp message
+app.use('/api/v1/whatsapp', require('./routes/whatsapp'))
 // Duo Security 2FA
 app.use('/api/v1/duo', require('./routes/duo'))
 // PQ Training Certification attribute updater
