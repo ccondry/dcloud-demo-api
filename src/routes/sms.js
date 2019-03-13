@@ -23,4 +23,21 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// request to look up if number is mobile
+router.get('/lookup/:phone', async function (req, res, next) {
+  try {
+    console.log('request to lookup phone number info:', req.params.phone)
+    const response = redundantRequest({
+      url: '/api/v1/sms/lookup/' + req.params.phone,
+      method: 'GET',
+      json: true
+    }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
+    return res.status(200).send(response)
+  } catch (e) {
+    // failed
+    console.error('failed to send SMS:', e.message)
+    return res.status(500).send(e.message)
+  }
+})
+
 module.exports = router
