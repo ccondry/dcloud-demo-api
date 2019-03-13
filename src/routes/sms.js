@@ -6,7 +6,7 @@ const redundantRequest = require('../models/redundant-request')
 router.post('/', async (req, res, next) => {
   try {
     console.log('request to create send SMS:', req.query)
-    const response = redundantRequest({
+    const response = await redundantRequest({
       url: '/api/v1/sms',
       method: 'POST',
       body: {
@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
 router.get('/lookup/:phone', async function (req, res, next) {
   try {
     console.log('request to lookup phone number info:', req.params.phone)
-    const response = redundantRequest({
+    const response = await redundantRequest({
       url: '/api/v1/sms/lookup/' + req.params.phone,
       method: 'GET',
       json: true
