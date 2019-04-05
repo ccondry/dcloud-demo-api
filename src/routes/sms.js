@@ -5,13 +5,14 @@ const redundantRequest = require('../models/redundant-request')
 // send SMS
 router.post('/', async (req, res, next) => {
   try {
-    console.log('request to create send SMS:', req.query)
+    console.log('request to create send SMS - query =', req.query)
+    console.log('request to create send SMS - body =', req.body)
     const response = await redundantRequest({
       url: '/api/v1/sms',
       method: 'POST',
       body: {
-        to: req.query.to,
-        body: req.query.body
+        to: req.query.to || req.body.to,
+        body: req.query.body || req.body.body || req.query.message || req.body.message,
       },
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
@@ -19,6 +20,7 @@ router.post('/', async (req, res, next) => {
   } catch (e) {
     // failed
     console.error('failed to send SMS:', e.message)
+    console.error('failed to send SMS, request query was:', e.message)
     return res.status(500).send(e.message)
   }
 })
