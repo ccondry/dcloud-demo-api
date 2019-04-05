@@ -33,7 +33,7 @@ module.exports = async function ({
     },
     json: true
   })
-  console.log('dialogflow response:', JSON.stringify(rsp, null, 2))
+  // console.log('dialogflow response:', JSON.stringify(rsp, null, 2))
   // extract full response message
   const fulfillment = rsp.result.fulfillment
   let ret = ''
