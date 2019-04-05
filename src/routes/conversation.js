@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
       lang: req.query.language,
       token: req.query.token
     })
+    console.log('DialogFlow response:', rsp)
     const body = {
       outputText: rsp.outputText.replace(/[\'\"\!\,\?]/g, ''),
       action: rsp.action,
