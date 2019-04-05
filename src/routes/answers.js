@@ -25,7 +25,7 @@ router.put('/:ani', async (req, res, next) => {
     // get datacenter and session ID from session.xml file
     const json = await session.get()
     // save answers
-    await redundantRequest({
+    const response = await redundantRequest({
       url: '/api/v1/answers/' + req.params.ani,
       method: 'PUT',
       body: {
