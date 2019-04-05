@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     console.log('doing conversational IVR request for query = `' + req.query.transcript + '`')
     const rsp = await model({
       q: req.query.transcript,
-      sessionId: req.query.sessionId,
+      sessionId: req.query.sessionId || uuidv1(),
       lang: req.query.language,
       token: req.query.token
     })
