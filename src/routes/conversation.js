@@ -28,7 +28,8 @@ router.get('/', async (req, res) => {
     const body = {
       outputText: rsp.outputText.replace(/[\'\"\!\,\?]/g, ''),
       action: rsp.action,
-      actionIncomplete: rsp.actionIncomplete
+      actionIncomplete: rsp.actionIncomplete,
+      sessionId: rsp.sessionId
     }
     console.log('conversational IVR - returning', body)
     // send only relevant data, and don't send any arrays?
