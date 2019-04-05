@@ -5,10 +5,18 @@ const model = require('../models/verticals')
 // get verticals list from mm or mm-dev
 router.get('/', async (req, res, next) => {
   try {
-    console.log('request to get demo verticals list')
-    // get verticals list
-    const verticals = await model.get()
-    return res.status(200).send(verticals)
+    // make sure the req.query object exists
+    req.query = req.query || {}
+    console.log('request to get demo verticals. query =', req.query.id)
+    if (req.query.id) {
+      // get verticals list
+      const vertical = await model.getOne(req.query.id)
+      return res.status(200).send(vertical)
+    } else {
+      // get verticals list
+      const verticals = await model.get()
+      return res.status(200).send(verticals)
+    }
   } catch (e) {
     // failed
     console.error('failed to get dCloud demo verticals list:', e.message)
