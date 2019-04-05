@@ -33,7 +33,7 @@ module.exports = async function ({
     },
     json: true
   })
-
+  console.log('dialogflow response:', JSON.stringify(rsp, null, 2))
   // extract full response message
   const fulfillment = rsp.result.fulfillment
   let ret = ''
@@ -47,7 +47,8 @@ module.exports = async function ({
   const result = rsp.result
   // attach compiled speech text onto the response
   result.outputText = ret.trim()
-
+  // attach session ID from DialogFlow response to our output
+  result.sessionId = rsp.sessionId
   // return the modified response
   return result
 }
