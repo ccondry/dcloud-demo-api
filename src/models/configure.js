@@ -4,12 +4,7 @@ const session = require('./session')
 const cumulus = require('./cumulus')
 
 const defaultConfiguration = {
-  chatBotEnabled: true,
-  chatBotSurveyEnabled: true,
-  chatBotToken: "5dc044d7822d43a5839627427ed28935",
-  language: "en",
   // multichannel: "ece",
-  region: "US",
   vertical: "finance"
 }
 
