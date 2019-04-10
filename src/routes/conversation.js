@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
     return res.status(200).send(body)
   } catch (error) {
     console.log('failed to get conversational IVR transcript AI response:', error.message)
+    console.log('conversational IVR token in req.query.token was:', req.query.token)
     return res.status(500).send(error.message)
   }
 })
