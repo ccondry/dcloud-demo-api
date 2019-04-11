@@ -118,6 +118,17 @@ async function updateConfig (data) {
   try {
     // try to update the config
     const values = await patchConfig(data)
+    // also update in local database to prepare for future move away from mm
+    // holding the data
+    // save config in local cumulus database with empty string for user ID
+    // so that it matches when user Id is not set
+    cumulus.saveConfig('', data)
+    .then(r => {
+      console.log('Successfully saved cumulus config data for scheduled session.')
+    })
+    .catch(e => {
+      console.log('Failed to save cumulus config data for scheduled session:', e.message)
+    })
     // evaluate results
     const primarySuccess = !(values[0] instanceof Error)
     const secondarySuccess = !(values[1] instanceof Error)
