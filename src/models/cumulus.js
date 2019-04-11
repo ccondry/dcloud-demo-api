@@ -1,9 +1,5 @@
-let db
-try {
-  db = require('./mongodb')
-} catch (e) {
-  console.log('failed to connect to mongo DB:', e)
-}
+const DB = require('./mongodb')
+const db = new DB('toolbox')
 
 const defaults = {
   chatBotEnabled: true,
