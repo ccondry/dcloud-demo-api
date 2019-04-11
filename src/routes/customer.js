@@ -1,45 +1,47 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../models/mongodb')
+const DB = require('../models/mongodb')
+const db = new DB('toolbox')
 // const logger = require('../models/logger')
 
-// check if a contact point is registered to this demo session as a customer
-// contact point = email, phone, FB ID, etc.
-router.get('/:contact', async function (req, res) {
+// get customer registered to this demo session
+router.get('/:contact', getCustomer)
+router.get('/', getCustomer)
+
+async function getCustomer (req, res) {
   // prepare log data for log object
   const clientIp = req.clientIp
   const method = req.method
   const host = req.get('host')
   const path = req.originalUrl
   const url = req.protocol + '://' + host + path
+  const query = req.query || {}
+  const params = req.params || {}
   const operation = 'get customer'
-  const query = req.query
-  const params = req.params
-  // const body = req.body
 
-  console.log('client at IP', req.clientIp, 'requested', operation)
+  console.log('client at IP', clientIp, 'requested', operation)
 
-
-  try {
-    // validate token
-    await tokens.get({token, type: 'customer', grant: 'exists'})
-    // console.log('validToken', validToken)
-  } catch (e) {
-    // invalid token
-    const details = 'Failed to validate authorization token: ' + e.message
-    // log it to db
-    // logger.log({clientIp, host, path, url, method, operation, status: 403, details, query, params})
-    console.log(details)
-    // return 403 UNAUTHORIZED
-    return res.status(403).send(details)
-  }
+  // // validate token
+  // try {
+  //   await tokens.get({token, type: 'customer', grant: 'exists'})
+  //   // console.log('validToken', validToken)
+  // } catch (e) {
+  //   // invalid token
+  //   const details = 'Failed to validate authorization token: ' + e.message
+  //   // log it to db
+  //   // logger.log({clientIp, host, path, url, method, operation, status: 403, details, query, params})
+  //   console.log(details)
+  //   // return 403 UNAUTHORIZED
+  //   return res.status(403).send(details)
+  // }
 
   // get data from params
-  const contact = req.params.contact
+  const contact = params.contact || query.contact
 
   // validate data
   if (!contact) {
-    const details = '"contact" is a required parameter.'
+    const details = '"contact" is a required parameter in the URL or query string.'
+    console.log('client at IP', clientIp, 'failed', operation, ':', details)
     // log it to db
     // logger.log({clientIp, host, path, url, method, operation, status: 400, details, query, params})
     // return 400 BAD_REQUEST
@@ -48,30 +50,28 @@ router.get('/:contact', async function (req, res) {
 
   try {
     // get customer routing information for contact
-    const results = await db.findOne('routing', {contact})
-    let exists
+    // const projection = {_id: 0}
+    const results = await db.findOne('routing', {contact}, {_id: 0})
     if (results) {
       // contact point is registered
-      exists = true
+      console.log(operation, 'successful:', results)
+      // return 200 OK with data
+      return res.status(200).send(results)
     } else {
       // not registered
-      exists = false
+      console.log(operation, 'successful, but no customer found. Returning 404. contact was', contact)
+      // return 404 NOT_FOUND
+      return res.status(404).send('no customer found matching your query')
     }
-    // error
-    console.log(operation, 'successful. exists = ', exists)
-    // log it to db
-    // logger.log({clientIp, host, path, url, method, operation, status: 200, details: {exists}, query, params})
-    // return 200 OK with data
-    return res.status(200).send({exists})
   } catch (e) {
     // error
     console.error('failed to', operation, e.message)
     // log it to db
     // logger.log({clientIp, host, path, url, method, operation, status: e.statusCode, details: e.message, query, params})
     // return status sent by hydra
-    return res.status(e.statusCode).send(e.message)
+    return res.status(500).send(e.message)
   }
-})
+}
 
 // register a customer for an instant demo user
 router.post('/', async function (req, res) {
