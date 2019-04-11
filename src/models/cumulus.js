@@ -2,12 +2,6 @@ const DB = require('./mongodb')
 const db = new DB('toolbox')
 
 const defaults = {
-  chatBotEnabled: true,
-  chatBotSurveyEnabled: true,
-  chatBotToken: process.env.chat_bot_token,
-  language: 'en',
-  // multichannel: "ece",
-  region: 'US',
   vertical: 'finance'
 }
 
