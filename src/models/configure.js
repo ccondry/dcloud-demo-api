@@ -10,10 +10,13 @@ const defaultConfiguration = {
 
 async function getConfig (userId) {
   if (userId) {
+    // userId was sent, so just return local database config info
     console.log('getting session configuration for', userId)
     const configuration = await cumulus.getConfig(userId)
     return {configuration}
   } else {
+    // userId was undefined/null/empty
+    // get session configuration from MM and MM-dev
     console.log('getting session configuration')
     let json = session.get()
     console.log('got session.xml data. session', json.id, 'in datacenter', json.datacenter)
