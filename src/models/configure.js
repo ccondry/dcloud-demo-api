@@ -9,32 +9,32 @@ const defaultConfiguration = {
 }
 
 async function getConfig (userId) {
-  if (userId) {
-    // userId was sent, so just return local database config info
-    console.log('getting session configuration for', userId)
-    const configuration = await cumulus.getConfig(userId)
-    return {configuration}
-  } else {
-    // userId was undefined/null/empty
-    // get session configuration from MM and MM-dev
-    console.log('getting session configuration')
-    let json = session.get()
-    console.log('got session.xml data. session', json.id, 'in datacenter', json.datacenter)
-    // url path
-    const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
-
-    const options = {
-      baseUrl: process.env.MM_API_1,
-      url,
-      json: true
-    }
-    // add userId if it was provided
+  try {
     if (userId) {
-      options.qs = {userId}
-    }
+      // userId was sent, so just return local database config info
+      console.log('getting session configuration for', userId)
+      const configuration = await cumulus.getConfig(userId)
+      return {configuration}
+    } else {
+      // userId was undefined/null/empty
+      // get session configuration from MM and MM-dev
+      console.log('getting session configuration')
+      let json = session.get()
+      console.log('got session.xml data. session', json.id, 'in datacenter', json.datacenter)
+      // url path
+      const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
 
-    let response
-    try {
+      const options = {
+        baseUrl: process.env.MM_API_1,
+        url,
+        json: true
+      }
+      // add userId if it was provided
+      if (userId) {
+        options.qs = {userId}
+      }
+
+      let response
       // get session config from mm
       const r = await request(options)
       // if no configuration set for this session, fill in the default
