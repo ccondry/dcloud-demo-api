@@ -13,7 +13,9 @@ async function getConfig (userId) {
     if (userId) {
       // userId was sent, so just return local database config info
       console.log('getting session configuration for', userId)
-      const configuration = await cumulus.getConfig(userId)
+      let configuration = await cumulus.getConfig(userId)
+      configuration = configuration || {}
+      configuration.vertical = configuration.vertical = 'finance'
       return {configuration}
     } else {
       // userId was undefined/null/empty
