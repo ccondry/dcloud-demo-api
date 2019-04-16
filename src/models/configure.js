@@ -47,29 +47,30 @@ async function getConfig (userId) {
         }
       }
       return r
-    } catch (e) {
-      console.log('failed to get session config from', process.env.MM_API_1, e.message)
-      try {
-        // get session config from mm-dev
-        options.baseUrl = process.env.MM_API_2
-        const r2 = await request(options)
-        // if no configuration set for this session, fill in the default
-        if (!r2.configuration) {
-          r2.configuration = defaultConfiguration
-          if (r2.demo === 'pcce') {
-            r2.configuration.multichannel = 'ece'
-          } else if (r2.demo === 'uccx') {
-            // r.configuration.multichannel = 'uccx'
-          }
+    }
+  } catch (e) {
+    console.log('failed to get session config from', process.env.MM_API_1, e.message)
+    try {
+      // get session config from mm-dev
+      options.baseUrl = process.env.MM_API_2
+      const r2 = await request(options)
+      // if no configuration set for this session, fill in the default
+      if (!r2.configuration) {
+        r2.configuration = defaultConfiguration
+        if (r2.demo === 'pcce') {
+          r2.configuration.multichannel = 'ece'
+        } else if (r2.demo === 'uccx') {
+          // r.configuration.multichannel = 'uccx'
         }
-        return r2
-      } catch (e2) {
-        console.log('failed to get session config from', process.env.MM_API_2, e2.message)
-        // failed both
-        throw e2
       }
+      return r2
+    } catch (e2) {
+      console.log('failed to get session config from', process.env.MM_API_2, e2.message)
+      // failed both
+      throw e2
     }
   }
+}
 }
 
 async function patchConfig (body) {
