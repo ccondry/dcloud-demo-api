@@ -71,7 +71,6 @@ async function getConfig (userId) {
     }
   }
 }
-}
 
 async function patchConfig (body) {
   console.log('running: update dcloud session configuration')
