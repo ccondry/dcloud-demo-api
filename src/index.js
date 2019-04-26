@@ -49,6 +49,8 @@ app.use('/api/v1/certification', require('./routes/certification'))
 app.use('/api/v1/conversation', require('./routes/conversation'))
 // instant demo customer contact registration
 app.use('/api/v1/customer', require('./routes/customer'))
+// redirection links
+app.use('/api/v1/redirect', require('./routes/redirect'))
 
 /*****************
 External Endpoints
