@@ -14,6 +14,7 @@ async function getConfig (userId) {
       // userId was sent, so just return local database config info
       console.log('getting session configuration for', userId)
       let configuration = await cumulus.getConfig(userId)
+      console.log('session configuration for', userId, 'is', configuration)
       configuration = configuration || {}
       configuration.vertical = configuration.vertical = 'finance'
       return {configuration}
