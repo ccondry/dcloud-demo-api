@@ -15,8 +15,15 @@ async function getConfig (userId) {
       console.log('getting session configuration for', userId)
       let configuration = await cumulus.getConfig(userId)
       console.log('session configuration for', userId, 'is', configuration)
-      configuration = configuration || {}
-      configuration.vertical = configuration.vertical = 'finance'
+      console.log('configuration.vertical for', userId, 'is', configuration.vertical)
+      // configuration should be at least an empty object
+      if (!configuration) {
+        configuration = {}
+      }
+      // set default vertical to 'finance' if it is not set yet
+      if (!configuration.vertical) {
+        configuration.vertical = 'finance'
+      }
       return {configuration}
     } else {
       // userId was undefined/null/empty
