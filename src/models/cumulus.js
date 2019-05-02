@@ -8,8 +8,10 @@ const defaults = {
 // get user's Cumulus config from database
 async function getConfig (userId) {
   try {
+    // don't return db ID
+    const projection = {_id: 0}
     // look up user config in database
-    const config = await db.findOne('cumulus.config', {userId}, {_id: 0})
+    const config = await db.findOne('cumulus.config', {userId}, {projection})
     // return config if it exists
     if (config) return config
     // return default config since user config did not exist
