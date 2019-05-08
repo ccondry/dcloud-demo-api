@@ -39,7 +39,7 @@ async function registerCustomer (req, res, next) {
     const customer = await redundantRequest({
       url: '/api/v1/customer',
       method: 'POST',
-      body: {contact, userId},
+      qs: {contact, userId},
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
     console.log('register customer successful:', req.query)
