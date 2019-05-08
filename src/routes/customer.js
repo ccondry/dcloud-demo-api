@@ -43,8 +43,8 @@ async function registerCustomer (req, res, next) {
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
     console.log('register customer successful:', req.query)
-    // return 202 ACCEPTED
-    return res.status(202).send()
+    // return 200 OK
+    return res.status(200).send()
   } catch (e) {
     // failed
     console.error('failed to register customer info for', req.query, ':', e.message)
