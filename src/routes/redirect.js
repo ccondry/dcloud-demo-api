@@ -4,7 +4,8 @@ const session = require('../models/session')
 
 // set up map of URL paths to the redirect base URL
 const hostMap = {
-  links: 'https://mm-links.cxdemo.net/',
+  // links: 'https://mm-links.cxdemo.net/',
+  links: 'https://mm.cxdemo.net/api/v1/redirect/links/',
   cumulus: process.env.MM_API_1,
   brand: process.env.MM_BRAND_URL
 }
