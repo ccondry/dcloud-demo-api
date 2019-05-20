@@ -15,8 +15,8 @@ async function redundantRequest (options, baseUrl1, baseUrl2) {
       return await request(options)
     } catch (e2) {
       console.log('failed request to', baseUrl2, e2.message)
-      // failed both
-      throw e2
+      // failed both - rethrow first error
+      throw e
     }
   }
 }
