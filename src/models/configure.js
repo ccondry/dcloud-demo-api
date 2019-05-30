@@ -35,10 +35,13 @@ async function getConfig (userId) {
       // url path
       const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
 
+      // set timeout to 7 seconds so that secondary can be tried in a
+      // reasonable amount of time
       options = {
         baseUrl: process.env.MM_API_1,
         url,
-        json: true
+        json: true,
+        timeout: 7000
       }
       // add userId if it was provided
       if (userId) {
@@ -64,6 +67,8 @@ async function getConfig (userId) {
     try {
       // get session config from mm-dev
       options.baseUrl = process.env.MM_API_2
+      // set timeout to 30 seconds
+      options.timeout = 30000
       const r2 = await request(options)
       // if no configuration set for this session, fill in the default
       if (!r2.configuration) {
@@ -102,7 +107,8 @@ async function patchConfig (body) {
         Authorization: 'Basic ' + basicAuth
       },
       body,
-      json: true
+      json: true,
+      timeout: 7000
     }
 
     // patch session on mm
@@ -110,6 +116,7 @@ async function patchConfig (body) {
 
     // and patch session on mm-dev
     options.baseUrl = process.env.MM_API_2
+    options.timeout = 30000
     const p2 = request(options)
 
     // wait for requests to resolve
