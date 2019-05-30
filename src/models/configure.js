@@ -41,7 +41,7 @@ async function getConfig (userId) {
         baseUrl: process.env.MM_API_1,
         url,
         json: true,
-        timeout: 7000
+        timeout: 5000
       }
       // add userId if it was provided
       if (userId) {
@@ -108,7 +108,7 @@ async function patchConfig (body) {
       },
       body,
       json: true,
-      timeout: 7000
+      timeout: 5000
     }
 
     // patch session on mm
