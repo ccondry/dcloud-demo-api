@@ -2,14 +2,15 @@ const mssql = require('mssql')
 
 async function saveAnswers (data) {
   // truncate data to SQL column max lengths, to prevent insertion errors
-  if (data.surveyId) data.surveyId = data.surveyId.slice(0, 10)
-  if (data.ani) data.ani = data.ani.slice(0, 32)
-  if (data.name) data.name = data.name.slice(0, 50)
-  if (data.q1) data.q1 = data.q1.slice(0, 10)
-  if (data.q2) data.q2 = data.q2.slice(0, 10)
+  // or, set to empty string if the value is undefined
+  data.surveyId ? data.surveyId = data.surveyId.slice(0, 10) : data.surveyId = ''
+  data.ani ? data.ani = data.ani.slice(0, 32) : data.ani = ''
+  data.name ? data.name = data.name.slice(0, 50) : data.name = ''
+  data.q1 ? data.q1 = data.q1.slice(0, 10) : data.q1 = ''
+  data.q2 ? data.q2 = data.q2.slice(0, 10) : data.q2 = ''
   // q3 is actually agent ID, so truncate to last 10 digits (keep significant
   // digits for instant demo agent IDs)
-  if (data.q3) data.q3 = data.q3.slice(-10)
+  data.q3 ? data.q3 = data.q3.slice(-10) : data.q3 = ''
 
   const config = {
     user: process.env.SQL_USER,
