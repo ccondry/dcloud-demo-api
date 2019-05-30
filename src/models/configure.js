@@ -9,6 +9,7 @@ const defaultConfiguration = {
 }
 
 async function getConfig (userId) {
+  let options
   try {
     if (userId) {
       // userId was sent, so just return local database config info
@@ -34,7 +35,7 @@ async function getConfig (userId) {
       // url path
       const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
 
-      const options = {
+      options = {
         baseUrl: process.env.MM_API_1,
         url,
         json: true
