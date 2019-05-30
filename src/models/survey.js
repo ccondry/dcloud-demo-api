@@ -8,8 +8,8 @@ async function saveAnswers (data) {
     database: process.env.SQL_DB
   }
 
-  const query = `INSERT INTO [PostCallSurvey] (DateTime, SurveyId, ANI, Name, Q1, Q2)
-  VALUES (@datetime, @surveyId, @ani, @name, @q1, @q2)`
+  const query = `INSERT INTO [PostCallSurvey] (DateTime, SurveyId, ANI, Name, Q1, Q2, Q3)
+  VALUES (@datetime, @surveyId, @ani, @name, @q1, @q2, @q3)`
 
   try {
     const pool = await new mssql.ConnectionPool(config).connect()
@@ -20,6 +20,7 @@ async function saveAnswers (data) {
     .input('name', mssql.VarChar, data.name)
     .input('q1', mssql.VarChar, data.q1)
     .input('q2', mssql.VarChar, data.q2)
+    .input('q3', mssql.VarChar, data.q3)
     .query(query)
     mssql.close()
     return results.rowsAffected
