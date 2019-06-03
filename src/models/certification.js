@@ -4,13 +4,13 @@ const parser = require('./parsers')
 const cceHost = process.env.CCE_HOST || 'ccedata.dcloud.cisco.com'
 const cceUsername = process.env.CCE_USERNAME || 'administrator@dcloud.cisco.com'
 const ccePassword = process.env.CCE_PASSWORD || 'C1sco12345'
-const certificationAttributeId = process.env.CERTIFICATION_ATTRIBUTE_ID || '5036'
+const certificationAttributeId = process.env.CERTIFICATION_ATTRIBUTE_ID || '5045'
 
 // warn if required env vars not set
 if (!process.env.CCE_HOST) console.warn('process.env.CCE_HOST not configured. Using default value', cceHost)
 if (!process.env.CCE_USERNAME) console.warn('process.env.CCE_USERNAME not configured. Using default value', cceUsername)
 if (!process.env.CCE_PASSWORD) console.warn('process.env.CCE_PASSWORD not configured. Using default value', ccePassword)
-  if (!process.env.CERTIFICATION_ATTRIBUTE_ID) console.warn('process.env.CERTIFICATION_ATTRIBUTE_ID not configured. Using default value', certificationAttributeId)
+if (!process.env.CERTIFICATION_ATTRIBUTE_ID) console.warn('process.env.CERTIFICATION_ATTRIBUTE_ID not configured. Using default value', certificationAttributeId)
 
 const auth = {
   user: cceUsername,
