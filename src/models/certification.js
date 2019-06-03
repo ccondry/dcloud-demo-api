@@ -1,21 +1,25 @@
 const request = require('request-promise-native')
 const parser = require('./parsers')
 
-// warn if required env vars not set
-if (!process.env.CCE_HOST) console.warn('process.env.CCE_HOST not configured')
-if (!process.env.CCE_USERNAME) console.warn('process.env.CCE_USERNAME not configured')
-if (!process.env.CCE_PASSWORD) console.warn('process.env.CCE_PASSWORD not configured')
+const cceHost = process.env.CCE_HOST || 'ccedata.dcloud.cisco.com'
+const cceUsername = process.env.CCE_USERNAME || 'administrator@dcloud.cisco.com'
+const ccePassword = process.env.CCE_PASSWORD || 'C1sco12345'
+const certificationAttributeId = process.env.CERTIFICATION_ATTRIBUTE_ID || '5036'
 
-if (!process.env.CERTIFICATION_ATTRIBUTE_ID) console.warn('process.env.CERTIFICATION_ATTRIBUTE_ID not configured')
+// warn if required env vars not set
+if (!process.env.CCE_HOST) console.warn('process.env.CCE_HOST not configured. Using default value', cceHost)
+if (!process.env.CCE_USERNAME) console.warn('process.env.CCE_USERNAME not configured. Using default value', cceUsername)
+if (!process.env.CCE_PASSWORD) console.warn('process.env.CCE_PASSWORD not configured. Using default value', ccePassword)
+  if (!process.env.CERTIFICATION_ATTRIBUTE_ID) console.warn('process.env.CERTIFICATION_ATTRIBUTE_ID not configured. Using default value', certificationAttributeId)
 
 const auth = {
-  user: process.env.CCE_USERNAME,
-  pass: process.env.CCE_PASSWORD,
+  user: cceUsername,
+  pass: ccePassword,
   sendImmediately: true
 }
 
 // API URL base
-const baseUrl = `https://${process.env.CCE_HOST}/unifiedconfig/config/agent/`
+const baseUrl = `https://${cceHost}/unifiedconfig/config/agent/`
 
 // export function
 module.exports = async function (agentId, grade) {
@@ -100,7 +104,7 @@ async function setCertificationGrade (dbid, grade) {
   const newAttribute = {
     attributeValue: grade,
     attribute: {
-      refURL: '/unifiedconfig/config/attribute/' + process.env.CERTIFICATION_ATTRIBUTE_ID
+      refURL: '/unifiedconfig/config/attribute/' + certificationAttributeId
     }
   }
   // are there no attributes?
@@ -121,7 +125,7 @@ async function setCertificationGrade (dbid, grade) {
       // more than 1 attribute
       // look for certification attribute by ID
       const attribute = attributes.find(v => {
-        return v.attribute.refURL.split('/').pop() === process.env.CERTIFICATION_ATTRIBUTE_ID
+        return v.attribute.refURL.split('/').pop() === certificationAttributeId
       })
       if (attribute) {
         // agent has attribute - update the value
@@ -136,7 +140,7 @@ async function setCertificationGrade (dbid, grade) {
       }
     } else {
       // 1 attribute
-      if (attributes.refURL.split('/').pop() === process.env.CERTIFICATION_ATTRIBUTE_ID) {
+      if (attributes.refURL.split('/').pop() === certificationAttributeId) {
         // this is the attribute - update it
         attributes.attributeValue = grade
         // save to CCE
