@@ -25,11 +25,19 @@ router.get('/', async (req, res) => {
       token: req.query.token
     })
     console.log('DialogFlow response:', rsp)
+    console.log('stripping any extra sessionId in DialogFlow response...')
+    let sessionId = rsp.sessionId
+    try {
+      sessionId = rsp.sessionId.split('/').pop()
+      console.log('sessionId is now', sessionId)
+    } catch (e) {
+      console.log('failed to split and pop sessionId:', e.message)
+    }
     const body = {
       outputText: rsp.outputText.replace(/[\'\"\!\,\?]/g, ''),
       action: rsp.action,
       actionIncomplete: rsp.actionIncomplete,
-      sessionId: rsp.sessionId
+      sessionId
     }
     console.log('conversational IVR - returning', body)
     // send only relevant data, and don't send any arrays?
