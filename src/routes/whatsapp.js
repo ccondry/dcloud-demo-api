@@ -19,7 +19,11 @@ router.post('/', async (req, res, next) => {
   } catch (e) {
     // failed
     console.error('failed to send WhatsApp message:', e.message)
-    return res.status(500).send(e.message)
+    if (e.statusCode) {
+      return res.status(e.statusCode).send(e.message)
+    } else {
+      return res.status(500).send(e.message)
+    }
   }
 })
 
@@ -36,7 +40,11 @@ router.get('/lookup/:phone', async function (req, res, next) {
   } catch (e) {
     // failed
     console.error('failed to send SMS:', e.message)
-    return res.status(500).send(e.message)
+    if (e.statusCode) {
+      return res.status(e.statusCode).send(e.message)
+    } else {
+      return res.status(500).send(e.message)
+    }
   }
 })
 

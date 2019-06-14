@@ -24,7 +24,11 @@ async function getCustomer (req, res, next) {
   } catch (e) {
     // failed
     console.error('failed to get customer info for', contact, ':', e.message)
-    return res.status(e.statusCode).send(e.message)
+    if (e.statusCode) {
+      return res.status(e.statusCode).send(e.message)
+    } else {
+      return res.status(500).send(e.message)
+    }
   }
 }
 
@@ -48,7 +52,11 @@ async function registerCustomer (req, res, next) {
   } catch (e) {
     // failed
     console.error('failed to register customer info for', req.query, ':', e.message)
-    return res.status(e.statusCode).send(e.message)
+    if (e.statusCode) {
+      return res.status(e.statusCode).send(e.message)
+    } else {
+      return res.status(500).send(e.message)
+    }
   }
 }
 

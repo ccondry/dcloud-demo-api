@@ -18,7 +18,11 @@ router.get('/', async (req, res, next) => {
   } catch (e) {
     // failed
     console.error('failed to create short link:', e.message)
-    return res.status(500).send(e.message)
+    if (e.statusCode) {
+      return res.status(e.statusCode).send(e.message)
+    } else {
+      return res.status(500).send(e.message)
+    }
   }
 })
 
