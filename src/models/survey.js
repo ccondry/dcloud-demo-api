@@ -1,4 +1,5 @@
 const mssql = require('mssql')
+const moment = require('moment')
 
 async function saveAnswers (data) {
   // truncate data to SQL column max lengths, to prevent insertion errors
@@ -24,8 +25,9 @@ async function saveAnswers (data) {
 
   try {
     const pool = await new mssql.ConnectionPool(config).connect()
+    const datetimenow = moment().format()
     const results = await pool.request()
-    .input('datetime', mssql.DateTime, new Date())
+    .input('datetime', mssql.DateTime, datetimenow)
     .input('surveyId', mssql.VarChar, data.surveyId)
     .input('ani', mssql.VarChar, data.ani)
     .input('name', mssql.VarChar, data.name)
