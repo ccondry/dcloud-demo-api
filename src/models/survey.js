@@ -26,8 +26,9 @@ async function saveAnswers (data) {
   try {
     const pool = await new mssql.ConnectionPool(config).connect()
     const datetimenow = moment().format()
+    console.log('datetimenow is', datetimenow)
     const results = await pool.request()
-    .input('datetime', mssql.DateTime, datetimenow)
+    .input('datetime', mssql.DateTime, new Date(datetimenow))
     .input('surveyId', mssql.VarChar, data.surveyId)
     .input('ani', mssql.VarChar, data.ani)
     .input('name', mssql.VarChar, data.name)
