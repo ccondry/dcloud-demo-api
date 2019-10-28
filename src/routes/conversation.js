@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models/conversation')
-const uuidv1 = require('uuid/v1')
+const uuid = require('uuid')
 
 // take conversational IVR speech-to-text transcript and return AI/Bot response
 router.get('/', async (req, res) => {
@@ -19,10 +19,10 @@ router.get('/', async (req, res) => {
     }
     console.log('doing conversational IVR request for query = `' + req.query.transcript + '`')
     const rsp = await model({
-      q: req.query.transcript,
-      sessionId: req.query.sessionId || uuidv1(),
-      lang: req.query.language,
-      token: req.query.token
+      text: req.query.transcript,
+      sessionId: req.query.sessionId || uuid.v4(),
+      languageCode: req.query.languageCode,
+      projectId: req.query.projectId
     })
     console.log('DialogFlow response:', rsp)
     console.log('stripping any extra sessionId in DialogFlow response...')
@@ -36,7 +36,8 @@ router.get('/', async (req, res) => {
     const body = {
       outputText: rsp.outputText.replace(/[\'\"\!\,\?]/g, ''),
       action: rsp.action,
-      actionIncomplete: rsp.actionIncomplete,
+      projectId: rsp.projectId,
+      languageCode: rsp.languageCode,
       sessionId
     }
     console.log('conversational IVR - returning', body)
