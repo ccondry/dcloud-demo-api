@@ -1,5 +1,5 @@
 const request = require('request-promise-native')
-const xml2js = require('xml2js')
+const parser = require('../parsers')
 
 const host = process.env.FINESSE_HOST || 'finesse1.dcloud.cisco.com'
 const username = process.env.FINESSE_USERNAME || 'administrator'
@@ -8,15 +8,6 @@ const labMode = process.env.CS_LAB_MODE !== 'false'
 const csHost1 = process.env.CS_REST_HOST_1 || 'http://198.19.253.32/api/pcce/cs'
 const csHost2 = process.env.CS_REST_HOST_2 || 'http://198.19.253.49/api/pcce/cs'
 
-// promisify xml2js.parseString
-function parseXmlString (string) {
-  return new Promise(function (resolve, reject) {
-    xml2js.parseString(string, {explicitArray: false}, function (err, result) {
-      if (err) reject(err)
-      else resolve(result)
-    })
-  })
-}
 // decode connection data from base64 string into JSON
 function decodeConnectionData (connectionDataString) {
   const buff = new Buffer(connectionDataString, 'base64')
@@ -49,7 +40,7 @@ async function getCsStatus () {
   // parse xml to json
   let json
   try {
-    json = await parseXmlString(xml)
+    json = parser.xml2js(xml)
   } catch (e) {
     throw new Error(`Failed to get parse Context Service config from Finesse server ${host} - ${e.message}`)
   }

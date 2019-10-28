@@ -1,19 +1,10 @@
 const request = require('request-promise-native')
-const xml2js = require('xml2js')
+const parser = require('../parsers')
 
 const host = process.env.CCE_HOST || 'ccedata.dcloud.cisco.com'
 const username = process.env.CCE_USERNAME || 'administrator@dcloud.cisco.com'
 const password = process.env.CCE_PASSWORD || 'C1sco12345'
 
-// promisify xml2js.parseString
-function parseXmlString (string) {
-  return new Promise(function (resolve, reject) {
-    xml2js.parseString(string, {explicitArray: false}, function (err, result) {
-      if (err) reject(err)
-      else resolve(result)
-    })
-  })
-}
 
 // example bad status (stale/invalid data)
 //
@@ -58,7 +49,7 @@ async function getCsStatus () {
 
   // parse xml to json
   try {
-    const json = await parseXmlString(xml)
+    const json = parser.xml2js(xml)
     return {
       state: json.contextServiceRegistration.state
     }
