@@ -81,6 +81,21 @@ async function copyInteractionHistory ({
   }
 }
 
+async function copyCustomers () {
+  try {
+    // get connection pool
+    const pool = await new mssql.ConnectionPool(config).connect()
+    const request1 = new mssql.Request(pool)
+    // run sp
+    return request1.execute('IRDB_DemoIHCustomerTableDataMigration')
+  } catch (e) {
+    console.log('failed to run IRDB_DemoIHCustomerTableDataMigration:', e.message)
+    throw e
+  } finally {
+    mssql.close()
+  }
+}
+
 async function setCustomerWithInteractionHistory ({
   contactId,
   phone,
@@ -134,5 +149,6 @@ module.exports = {
   createCustomer,
   getCustomers,
   copyInteractionHistory,
-  setCustomerWithInteractionHistory
+  setCustomerWithInteractionHistory,
+  copyCustomers
 }

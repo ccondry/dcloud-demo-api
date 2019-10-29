@@ -37,6 +37,9 @@ router.post('/customer', async (req, res, next) => {
       createInteractionHistory: req.body.interactionHistory,
       deleteInteractionHistory: true
     })
+    // do the thing to make the customers copy over to the right database in Upstream
+    // this is necessary for interaction history to match customer in dCloud demo
+    await model.copyCustomers()
     // create customer succeeded
     console.log('POST request to create Upstream customer succeeded')
     // return ACCEPTED
