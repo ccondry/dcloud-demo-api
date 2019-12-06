@@ -16,39 +16,43 @@ module.exports = async function ({
   // the dialog flow client API token for a bot agent
   projectId = process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
 }) {
-  // get dialogflow response
-  const rsp = await request({
-    method: 'GET',
-    url: 'https://mm.cxdemo.net/api/v1/dialogflow/query',
-    qs: {
-      sessionId,
-      languageCode,
-      text,
-      projectId
-    },
-    json: true
-  })
+  try {
+    // get dialogflow response
+    const rsp = await request({
+      method: 'GET',
+      url: 'https://mm.cxdemo.net/api/v1/dialogflow/query',
+      qs: {
+        sessionId,
+        languageCode,
+        text,
+        projectId
+      },
+      json: true
+    })
 
-  // get fulfillment from response
-  const fulfillment = rsp[0].queryResult.fulfillmentMessages
-  const action = rsp[0].queryResult.action
-  // extract full response message
-  let ret = ''
-  if (fulfillment) {
-    // add bot's reply to return message
-    for (const message of fulfillment) {
-      ret += message.text.text[0] + ' '
+    // get fulfillment from response
+    const fulfillment = rsp[0].queryResult.fulfillmentMessages
+    const action = rsp[0].queryResult.action
+    // extract full response message
+    let ret = ''
+    if (fulfillment) {
+      // add bot's reply to return message
+      for (const message of fulfillment) {
+        ret += message.text.text[0] + ' '
+      }
     }
-  }
-  // trim output text
-  const outputText = ret.trim()
+    // trim output text
+    const outputText = ret.trim()
 
-  // return the modified response
-  return {
-    outputText,
-    sessionId,
-    projectId,
-    languageCode,
-    action
+    // return the modified response
+    return {
+      outputText,
+      sessionId,
+      projectId,
+      languageCode,
+      action
+    }
+  } catch (e) {
+    throw e
   }
 }
