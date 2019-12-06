@@ -12,10 +12,22 @@ module.exports = async function ({
   // generate a uuid session ID if not set
   sessionId = uuid.v4(),
   // the language like 'en-US'
-  languageCode = process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE || 'en-US',
+  languageCode = process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE,
   // the dialog flow client API token for a bot agent
-  projectId = process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
+  // projectId = process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
+  // set to default project ID in env file
+  projectId = process.env.DIALOGFLOW_DEFAULT_PROJECT_ID
 }) {
+  // was env value blank?
+  if (!projectId) {
+    // use this default string
+    projectId = 'cumulus-v2-hotikl'
+  }
+  // was env value blank?
+  if (!languageCode) {
+    // use this default string
+    projectId = 'en-US'
+  }
   try {
     const qs = {
       sessionId,
