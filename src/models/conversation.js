@@ -26,7 +26,7 @@ module.exports = async function ({
   // was env value blank?
   if (!languageCode) {
     // use this default string
-    projectId = 'en-US'
+    languageCode = 'en-US'
   }
   try {
     const qs = {
