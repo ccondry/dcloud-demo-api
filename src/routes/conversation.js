@@ -6,7 +6,7 @@ const uuid = require('uuid')
 // take conversational IVR speech-to-text transcript and return AI/Bot response
 router.get('/', async (req, res) => {
   try {
-    console.log('request for conversational IVR transcript AI')
+    console.log('request for conversational IVR transcript AI with query', req.query)
     // validate transcript query string exists, is not an empty string, and is
     // not a string of only "+" characters
     if (
