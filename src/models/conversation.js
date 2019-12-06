@@ -17,16 +17,18 @@ module.exports = async function ({
   projectId = process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
 }) {
   try {
+    const qs = {
+      sessionId,
+      languageCode,
+      text,
+      projectId
+    }
+    console.log('conversation model - sending dialogflow query to cumulus-api:', qs)
     // get dialogflow response
     const rsp = await request({
       method: 'GET',
       url: 'https://mm.cxdemo.net/api/v1/dialogflow/query',
-      qs: {
-        sessionId,
-        languageCode,
-        text,
-        projectId
-      },
+      qs,
       json: true
     })
 
