@@ -19,7 +19,7 @@ module.exports = async function ({
   // get dialogflow response
   const rsp = await request({
     method: 'GET',
-    url: 'https://mm.cxdemo.net/v1/dialogflow/query',
+    url: 'https://mm.cxdemo.net/api/v1/dialogflow/query',
     qs: {
       sessionId,
       languageCode,
