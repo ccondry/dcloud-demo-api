@@ -2,8 +2,14 @@ const request = require('request-promise-native')
 const uuid = require('uuid')
 
 // warn if required env vars not set
-if (!process.env.DIALOGFLOW_DEFAULT_PROJECT_ID) console.warn('process.env.DIALOGFLOW_DEFAULT_PROJECT_ID not configured. Using default value.')
-if (!process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE) console.warn('process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE not configured. Using default value.')
+if (!process.env.DIALOGFLOW_DEFAULT_PROJECT_ID) {
+  console.warn('process.env.DIALOGFLOW_DEFAULT_PROJECT_ID not configured. Using default value.')
+  process.env.DIALOGFLOW_DEFAULT_PROJECT_ID = 'cumulus-v2-hotikl'
+}
+if (!process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE) {
+  console.warn('process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE not configured. Using default value.')
+  process.env.DIALOGFLOW_DEFAULT_LANGUAGE_CODE = 'en-US'
+}
 
 // figure out a response using DialogFlow AI
 module.exports = async function ({
