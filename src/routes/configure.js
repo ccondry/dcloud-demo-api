@@ -35,8 +35,8 @@ router.post('/', async (req, res, next) => {
     // get this session data from mm
     const config = await configure.get()
     // pcce demo?
-    if (config.demo === 'pcce') {
-      console.log('this is pcce demo, so set the Upstream vertical also. using vertical', req.body.vertical)
+    if (config.demo === 'pcce' && ['11.6v3', '12.0v1', '12.0v2', '12.5EFT'].includes(config.version)) {
+      console.log('this is a standard PCCE demo, so set the Upstream vertical also. using vertical', req.body.vertical)
       // get vertical details from vertical ID
       const vertical = await verticals.getOne(req.body.vertical)
       // console.log('vertical =', vertical)
