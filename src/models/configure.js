@@ -111,22 +111,8 @@ async function patchConfig (body) {
       timeout: 5000
     }
 
-    // patch session on mm
-    const p1 = request(options)
-
-    // and patch session on mm-dev
-    options.baseUrl = process.env.MM_API_2
-    options.timeout = 30000
-    const p2 = request(options)
-
-    // wait for requests to resolve
-    const values = await Promise.all([
-      p1.catch(error => { return error }),
-      p2.catch(error => { return error })
-    ])
-
-    // return results
-    return values
+    // patch session on mm and return results
+    return request(options)
   } catch (e) {
     throw e
   }
@@ -135,7 +121,16 @@ async function patchConfig (body) {
 async function updateConfig (data) {
   try {
     // try to update the config
-    const values = await patchConfig(data)
+    await patchConfig(data)
+    
+    // success
+    return 'Successfully updated your dCloud demo configuration.'
+  } catch (e) {
+    // failed
+    const message = 'Failed to update dCloud demo session configuration: ' + e.message
+    console.error(message)
+    throw Error(message)
+  } finally {
     // also update in local database to prepare for future move away from mm
     // holding the data
     // save config in local cumulus database with empty string for user ID
@@ -147,37 +142,6 @@ async function updateConfig (data) {
     .catch(e => {
       console.log('Failed to save cumulus config data for scheduled session:', e.message)
     })
-    // evaluate results
-    const primarySuccess = !(values[0] instanceof Error)
-    const secondarySuccess = !(values[1] instanceof Error)
-    // return results
-    if (primarySuccess && secondarySuccess) {
-      // success
-      let message = 'Successfully updated your dCloud demo configuration on the primary and secondary servers. \r\n'
-      message += 'Settings: ' + JSON.stringify(data)
-      return message
-    } else if (primarySuccess) {
-      // partial success
-      console.error(values[1].message)
-      let message = 'Successfully updated your dCloud demo configuration on the primary server, but failed to update the secondary server. \r\n'
-      message += 'Settings: ' + JSON.stringify(data)
-      return message
-    } else if (secondarySuccess) {
-      // partial success
-      console.error(values[0].message)
-      let message = 'Successfully updated your dCloud demo configuration on the secondary server, but failed to update the primary server. \r\n'
-      message += 'Settings: ' + JSON.stringify(data)
-      return message
-    } else {
-      // failed
-      console.error(values[0].message)
-      console.error(values[1].message)
-      let message = 'Failed to update dCloud demo session configuration on the primary and secondary servers. \r\n'
-      message += 'Settings: ' + JSON.stringify(data)
-      throw Error(message)
-    }
-  } catch (e) {
-    throw e
   }
 }
 
