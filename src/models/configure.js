@@ -4,7 +4,6 @@ const session = require('./session')
 const cumulus = require('./cumulus')
 
 const defaultConfiguration = {
-  // multichannel: "ece",
   vertical: "finance"
 }
 
