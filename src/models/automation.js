@@ -16,7 +16,7 @@ async function run () {
     if (!session) throw Error('session.xml JSON data was undefined')
     
     // build query string
-    const settings = await getSettings()
+    const settings = getSettings()
     const demo = settings.demo
     const version = settings.version
     const isInstant = settings.instant === 'true'
@@ -33,7 +33,8 @@ async function run () {
   }
 }
 
-async function getSettings () {
+// read the .env file from demo-automation project, and parse into JSON
+function getSettings () {
   const path = '/opt/dcloud/demo-automation/.env'
   const text = fs.readFileSync(path, 'utf-8')
   const lines = text.split('\n')
@@ -45,7 +46,7 @@ async function getSettings () {
   // })
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.
-  const settings = []
+  const settings = {}
   for (const line of lines) {
     // Each line in input.txt will be successively available here as `line`.
     // console.log(`Line from file: ${line}`)
@@ -56,10 +57,8 @@ async function getSettings () {
       // ignore comments
       continue
     } else {
-      const o = {}
       // store value
-      o[key] = value
-      settings.push(o)
+      settings[key] = value
     }
   }
   return settings
