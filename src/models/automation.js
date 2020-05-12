@@ -49,9 +49,17 @@ async function getSettings () {
     // Each line in input.txt will be successively available here as `line`.
     // console.log(`Line from file: ${line}`)
     const parts = line.split('=')
-    const o = {}
-    o[parts.shift()] = parts.join('=')
-    settings.push(o)
+    const key = parts.shift().trim()
+    const value = parts.join('=').trim()
+    if (key.indexOf('#') === 0) {
+      // ignore comments
+      continue
+    } else {
+      const o = {}
+      // store value
+      o[key] = value
+      settings.push(o)
+    }
   }
   return settings
 }  
