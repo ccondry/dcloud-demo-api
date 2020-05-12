@@ -32,16 +32,19 @@ async function run () {
 }
 
 async function getSettings () {
-  const fileStream = fs.createReadStream('/opt/dcloud/demo-automation/.env')
+  const path = '/opt/dcloud/demo-automation/.env'
+  const text = fs.readFileSync(path, 'utf-8')
+  const lines = text.split('\n')
+  // const fileStream = fs.createReadStream('/opt/dcloud/demo-automation/.env')
   
-  const rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
-  })
+  // const lines = readline.createInterface({
+  //   input: fileStream,
+  //   crlfDelay: Infinity
+  // })
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.
   const settings = []
-  for (const line of rl) {
+  for (const line of lines) {
     // Each line in input.txt will be successively available here as `line`.
     // console.log(`Line from file: ${line}`)
     const parts = line.split('=')
