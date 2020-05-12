@@ -4,7 +4,8 @@ const readline = require('readline')
 const fetch = require('node-fetch')
 
 module.exports = {
-  run
+  run,
+  getSettings
 }
 
 async function run () {
