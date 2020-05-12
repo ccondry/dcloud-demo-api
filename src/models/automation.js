@@ -1,6 +1,7 @@
 const dcloud = require('./session')
 const fs = require('fs')
 const readline = require('readline')
+const fetch = require('node-fetch')
 
 module.exports = {
   run
