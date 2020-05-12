@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
   } catch (e) {
     // failed
     console.error('failed to run dCloud session autmation script:', e.message)
-    return res.status(500).send(e.message)
+    return res.status(500).send('Failed to run dCloud session autmation script: ' + e.message)
   }
 })
 
