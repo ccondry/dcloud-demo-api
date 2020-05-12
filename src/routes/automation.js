@@ -7,6 +7,7 @@ router.get('/', async (req, res, next) => {
   try {
     console.log('request to run dCloud session automation script.')
     await model.run()
+    console.log('successfully ran dCloud automation script.')
     return res.status(200).send('Done! Your dCloud session information should now be available.')
     // return res.status(200).send()
   } catch (e) {
