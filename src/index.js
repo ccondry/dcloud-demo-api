@@ -51,6 +51,8 @@ app.use('/api/v1/conversation', require('./routes/conversation'))
 app.use('/api/v1/customer', require('./routes/customer'))
 // redirection links
 app.use('/api/v1/redirect', require('./routes/redirect'))
+// re-run dcloud session automation script
+app.use('/api/v1/automation', require('./routes/automation'))
 
 /*****************
 External Endpoints
