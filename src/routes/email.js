@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
   try {
     // determine TO email address
     let to
-    if (req.body.multichannel === 'sfdc') {
+    if (req.body.multichannel === 'salesforce') {
       // use SFDC email address?
       to = process.env.SFDC_EMAIL
     } else if (req.body.to && req.body.to.length && req.body.to.indexOf('@') < 0) {
