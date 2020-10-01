@@ -37,7 +37,7 @@
     "moment": "^2.24.0",
     "mongodb": "^3.2.3",
     "mssql": "^4.1.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "nodemailer": "^4.6.6",
     "query-string": "^6.1.0",
     "request": "^2.87.0",

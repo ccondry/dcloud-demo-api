@@ -53,6 +53,12 @@ app.use('/api/v1/customer', require('./routes/customer'))
 app.use('/api/v1/redirect', require('./routes/redirect'))
 // re-run dcloud session automation script
 app.use('/api/v1/automation', require('./routes/automation'))
+// get demo verticals
+app.use('/api/v1/verticals', require('./routes/verticals'))
+// get mobile app answers
+app.use('/api/v1/answers', require('./routes/answers'))
+// get demo base configuration
+app.use('/api/v1/demo', require('./routes/demo'))
 
 /*****************
 External Endpoints
@@ -67,10 +73,8 @@ app.use('/api/v1/email', require('./routes/email'))
 app.use('/api/v1/callback', require('./routes/callback'))
 // get demo status
 app.use('/api/v1/status', require('./routes/status'))
-// get demo verticals
-app.use('/api/v1/verticals', require('./routes/verticals'))
-// get mobile app answers
-app.use('/api/v1/answers', require('./routes/answers'))
+// PCCE unified config
+// app.use('/api/v1/cce', require('./routes/cce'))
 
 // log 404
 app.use((req, res, next) => {
