@@ -97,7 +97,12 @@ router.post('/', async (req, res, next) => {
       console.log(message)
       return res.status(500).send(message)
     }
-
+    // check that we found the key
+    if (!key) {
+      const message = `did to find Google Cloud credentials for vertical ${vertical.id}`
+      console.log(message)
+      return res.status(404).send(message)
+    }
     // create service account data object
     const serviceAccount = {
       name: vertical.gcpProjectId,
