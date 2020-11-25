@@ -14,7 +14,7 @@ module.exports = async function (url, options = {}) {
   }
   // add query to url
   let urlWithQuery = url
-  console.log('options.query', options.query)
+  // console.log('options.query', options.query)
   if (typeof options.query === 'object') {
     const keys = Object.keys(options.query)
     for (let i = 0; i < keys.length; i++) {
@@ -28,7 +28,7 @@ module.exports = async function (url, options = {}) {
       urlWithQuery += `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
     }
   }
-  console.log('getting', urlWithQuery)
+  // console.log('getting', urlWithQuery)
   // go
   const response = await fetch(urlWithQuery, options)
   // parse response to JSON
