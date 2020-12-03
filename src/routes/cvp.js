@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const email = require('../models/email')
 
-// CVP uses this route to send emails out to real email addresses on the internet
-router.post('/email', async (req, res) => {
+// send email from a GET or POST request
+async function sendEmail (req, res) {
   try {
     // construct nodemailer options
     const mailOptions = {
@@ -22,6 +22,10 @@ router.post('/email', async (req, res) => {
     console.log('error sending email', req.body, ':', error.message)
     res.status(500).send({message: error.message})
   }
-})
+}
+
+// CVP uses this route to send emails out to real email addresses on the internet
+router.post('/email', sendEmail)
+router.get('/email', sendEmail)
 
 module.exports = router
