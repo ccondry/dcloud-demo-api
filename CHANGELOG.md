@@ -2,6 +2,13 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+# 2020.12.3-1
+
+### Features
+
+* **CVP Email:** allow GET request to send email as well
+
+
 # 2020.12.3
 
 ### Features
