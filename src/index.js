@@ -59,6 +59,8 @@ app.use('/api/v1/verticals', require('./routes/verticals'))
 app.use('/api/v1/answers', require('./routes/answers'))
 // get demo base configuration
 app.use('/api/v1/demo', require('./routes/demo'))
+// request from CVP to send email to internet
+app.use('/api/v1/cvp', require('./routes/cvp'))
 
 /*****************
 External Endpoints

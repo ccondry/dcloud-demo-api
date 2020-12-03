@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const email = require('../models/email')
 
+// the demo website uses this route to send customer email into the demo
+// to be handled by an agent
 router.post('/', async (req, res) => {
   try {
     // determine TO email address
