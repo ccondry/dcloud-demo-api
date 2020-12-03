@@ -1,6 +1,13 @@
 # demo-api Change Log
 
-Dates are in YYYY-MM-DD format
+Dates are in YYYY.MM.DD-X format, where X is revision number
+
+# 2020.12.3
+
+### Features
+
+* **CVP Email:** add route for CVP to request an email be sent to the internet
+
 
 # 2020-11-24
 
