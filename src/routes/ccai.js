@@ -9,7 +9,7 @@ async function getCcaiInfo (req, res) {
   try {
     // get ID from URL parameter or URL query parameter
     const id = req.params.id || req.query.id
-    console.log('get ccai info for call type ID', id)
+    // console.log('get ccai info for call type ID', id)
     // get call type info from ID, from PCCE
     const callType = await cce.get('callType', id)
     // wait for initial cloud connect access token to be generated, if necessary
