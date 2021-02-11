@@ -34,14 +34,16 @@ function get () {
 
 // update cached token
 async function refresh () {
-  if (cache.refresh_token) {
-    // TODO try to use refresh token instead of creating a new one?
-    // or maybe just creating a new one every 16 hours isn't so bad
+  if (process.env.CLOUD_CONNECT_ENABLED === 'true') {
+    if (cache.refresh_token) {
+      // TODO try to use refresh token instead of creating a new one?
+      // or maybe just creating a new one every 16 hours isn't so bad
+    }
+    // replace token in cache
+    cache = await fetch(url, options)
+    // add current timestamp
+    cache.modified = (new Date()).getTime()
   }
-  // replace token in cache
-  cache = await fetch(url, options)
-  // add current timestamp
-  cache.modified = (new Date()).getTime()
 }
 
 // refresh at service start
@@ -66,10 +68,12 @@ async function checkExpiration () {
   }
 }
 
-// check token expiration every 30 minutes
-setInterval(function () {
-  checkExpiration()
-}, 1000 * 60 * 30)
+if (process.env.CLOUD_CONNECT_ENABLED === 'true') {
+  // check token expiration every 30 minutes, if enabled
+  setInterval(function () {
+    checkExpiration()
+  }, 1000 * 60 * 30)
+}
 
 module.exports = {
   get,
