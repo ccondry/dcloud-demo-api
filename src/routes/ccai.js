@@ -21,7 +21,7 @@ async function getCcaiInfo (req, res) {
       id: callType.ccaiConfigID,
       token
     })
-    return res.status(202).send(ret)
+    return res.status(200).send(ret)
   } catch (error) {
     console.log('failed to get CCAI call type info:', error.message)
     return res.status(500).send({message: error.message})
