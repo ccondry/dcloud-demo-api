@@ -2,6 +2,15 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+# 2021.2.11
+
+### Features
+
+* **Cloud Connect:** When enabled, will keep a Cloud Connect token cached in
+memory and allow /api/v1/ccai GET request to return the CCAI details for a given
+call type ID number.
+
+
 # 2020.12.3-1
 
 ### Features
