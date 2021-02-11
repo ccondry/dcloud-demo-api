@@ -54,7 +54,8 @@ async function checkExpiration () {
     return refresh()
   }
   // expiry time of token in cache. modified is ms while expires_in is seconds
-  const expires = (new Date()).setTime(cache.modified + (cache.expires_in * 1000))
+  const expires = new Date()
+  expires.setTime(cache.modified + (cache.expires_in * 1000))
   const now = new Date()
   // get difference
   const diff = now.getTime() - expires.getTime()
