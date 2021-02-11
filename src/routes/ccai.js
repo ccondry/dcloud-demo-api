@@ -13,7 +13,7 @@ async function getCcaiInfo (req, res) {
     // get call type info from ID, from PCCE
     const callType = await cce.get('calltype', id)
     // get access token from cloud connect
-    const token = await tokens.cloudConnect.get()
+    const token = tokens.cloudConnect.get()
     // get CCAI info from control hub
     const ret = await ccai.getConfig({
       id: callType.ccaiConfigID,
