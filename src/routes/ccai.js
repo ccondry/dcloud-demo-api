@@ -11,7 +11,9 @@ async function getCcaiInfo (req, res) {
     const id = req.params.id || req.query.id
     console.log('get ccai info for call type ID', id)
     // get call type info from ID, from PCCE
-    const callType = await cce.get('calltype', id)
+    const callType = await cce.get('callType', id)
+    // wait for initial cloud connect access token to be generated, if necessary
+    // await Promise.resolve(tokens.cloudConnect.init)
     // get access token from cloud connect
     const token = tokens.cloudConnect.get()
     // get CCAI info from control hub
@@ -21,7 +23,7 @@ async function getCcaiInfo (req, res) {
     })
     return res.status(202).send(ret)
   } catch (error) {
-    console.log('failed to save precision queue certification data:', error.message)
+    console.log('failed to get CCAI call type info:', error.message)
     return res.status(500).send({message: error.message})
   }
 }

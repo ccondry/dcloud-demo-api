@@ -8,18 +8,18 @@ const agent = new https.Agent({
 
 async function get (type, id) {
   const host = process.env.CCE_HOST || 'ccedata.dcloud.cisco.com'
-  const url = 'https://' + host + '/unifiedconfig/config/' + type + '/' + id
+  const url = 'https://' + host + '/unifiedconfig/config/' + type.toLowerCase() + '/' + id
   const username = process.env.CCE_USERNAME || 'administrator@dcloud.cisco.com'
   const password = process.env.CCE_PASSWORD || 'C1sco12345'
   const basic = Buffer.from(`${username}:${password}`, 'utf-8').toString('base64')
+  // console.log('basic', basic)
   const options = {
     headers: {
-      Authorization: 'Basic ' + basic,
-      Accept: 'application/json'
+      Authorization: 'Basic ' + basic
     },
     agent
   }
-  console.log('fetch', url, options)
+  // console.log('fetch', url, options)
   return fetch(url, options)
 }
 

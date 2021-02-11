@@ -45,7 +45,7 @@ async function refresh () {
 }
 
 // refresh at service start
-refresh()
+const init = refresh()
 
 async function checkExpiration () {
   // validate cache parameters exist
@@ -72,5 +72,6 @@ setInterval(function () {
 }, 1000 * 60 * 30)
 
 module.exports = {
-  get
+  get,
+  init
 }
