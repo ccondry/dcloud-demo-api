@@ -19,6 +19,7 @@ async function get (type, id) {
     },
     agent
   }
+  console.log('fetch', url, options)
   return fetch(url, options)
 }
 
