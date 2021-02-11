@@ -32,12 +32,19 @@ module.exports = async function (url, options = {}) {
   // go
   const response = await fetch(urlWithQuery, options)
   // parse response to JSON
-  const json = await response.json()
+  let data = await response.text()
+  // if (response.headers['content-type'] === 'application/json') {
+  try {
+    data = JSON.parse(data)
+  } catch (e) {
+    // continue
+  }
   // check status is OK
   if (response.ok) {
-    return json
+    return data
   } else {
-    const error = Error(`${response.status} ${response.statusText} - ${json.message}`)
+    const message = data.message || data
+    const error = Error(`${response.status} ${response.statusText} - ${message}`)
     error.status = response.status
     error.statusText = response.statusText
     error.response = response

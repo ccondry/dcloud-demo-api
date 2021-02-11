@@ -61,6 +61,8 @@ app.use('/api/v1/answers', require('./routes/answers'))
 app.use('/api/v1/demo', require('./routes/demo'))
 // request from CVP to send email to internet
 app.use('/api/v1/cvp', require('./routes/cvp'))
+// request from CVP to look up CCAI name and description from control hub
+app.use('/api/v1/ccai', require('./routes/ccai'))
 
 /*****************
 External Endpoints
