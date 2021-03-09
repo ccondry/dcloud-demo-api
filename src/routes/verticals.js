@@ -12,11 +12,11 @@ router.get('/', async (req, res, next) => {
       // get verticals list
       const vertical = await model.getOne(req.query.id)
       // remove any arrays so that CVP doesn't cry when parsing
-      for (const key of Object.keys(vertical)) {
-        if (Array.isArray(vertical[key])) {
-          delete vertical[key]
-        }
-      }
+      // for (const key of Object.keys(vertical)) {
+      //   if (Array.isArray(vertical[key])) {
+      //     delete vertical[key]
+      //   }
+      // }
       return res.status(200).send(vertical)
     } else {
       // get verticals list
@@ -37,11 +37,11 @@ router.get('/:id', async (req, res, next) => {
     // get vertical config
     const vertical = await model.getOne(req.params.id)
     // remove any arrays so that CVP doesn't cry when parsing
-    for (const key of Object.keys(vertical)) {
-      if (Array.isArray(vertical[key])) {
-        delete vertical[key]
-      }
-    }
+    // for (const key of Object.keys(vertical)) {
+    //   if (Array.isArray(vertical[key])) {
+    //     delete vertical[key]
+    //   }
+    // }
     return res.status(200).send(vertical)
   } catch (e) {
     // failed
