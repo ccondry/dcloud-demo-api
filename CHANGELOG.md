@@ -2,6 +2,12 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+# 2021.3.9
+
+### Bug Fixes
+* **Verticals:** Don't remove arrays from the vertical data before returning.
+
+
 # 2021.2.11
 
 ### Features
