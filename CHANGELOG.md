@@ -2,6 +2,14 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+# 2021.3.18-1
+
+### Bug Fixes
+* **Redirect:** Remove Webex v4 redirect condition for the links page - the
+session.xml file does not have the data we need to know if this session is 
+Webex v4 or not.
+
+
 # 2021.3.18
 
 ### Features
