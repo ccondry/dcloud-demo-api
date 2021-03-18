@@ -16,18 +16,6 @@ router.get('/:page', async (req, res, next) => {
     console.log('redirect request for page id', req.params.page)
     // get session.xml data as JSON object
     const json = session.get()
-    // links page for webex v4prod demo?
-    if (
-      req.params.page === 'links' &&
-      json.demo === 'webex' &&
-      json.version === 'v4prod'
-    ) {
-      // construct the redirect URL with dCloud session ID and datacenter
-      const redirect = `/`
-      console.log('redirecting user at page', req.params.page, 'to', redirect)
-      // redirect client with 302
-      return res.redirect(302, redirect)
-    }
     // set up base URL for redirect
     const host = hostMap[req.params.page]
     if (host) {
