@@ -2,6 +2,13 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+# 2021.3.18
+
+### Features
+* **Redirect:** Redirect Webex v4 demo users to the links page that is now
+hosted inside the demo instead of on the cloud web server.
+
+
 # 2021.3.9
 
 ### Bug Fixes
