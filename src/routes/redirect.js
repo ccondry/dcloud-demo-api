@@ -20,7 +20,13 @@ router.get('/:page', async (req, res, next) => {
     const host = hostMap[req.params.page]
     if (host) {
       // construct the redirect URL with dCloud session ID and datacenter
-      const redirect = `${host}?session=${json.id}&datacenter=${json.datacenter}`
+      let redirect = `${host}?session=${json.id}&datacenter=${json.datacenter}`
+      // append user's query, ignoring session and datacenter
+      for (const key of Object.keys(req.query)) {
+        if (!['session', 'datacenter'].includes(key)) {
+          redirect += `&${key}=${req.query[key]}`
+        }
+      }
       console.log('redirecting user at page', req.params.page, 'to', redirect)
       // redirect client with 302
       return res.redirect(302, redirect)
