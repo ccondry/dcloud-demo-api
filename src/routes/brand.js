@@ -23,6 +23,12 @@ router.get('/', async (req, res, next) => {
     // if (process.env.DEMO_TYPE === 'pcce') {
     //   redirect += '&config=true'
     // }
+    // append user's query, ignoring session and datacenter
+    for (const key of Object.keys(req.query)) {
+      if (!['session', 'datacenter'].includes(key)) {
+        redirect += `&${key}=${req.query[key]}`
+      }
+    }
     // redirect client with 302
     return res.redirect(302, redirect)
   } catch (e) {
