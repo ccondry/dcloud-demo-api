@@ -2,6 +2,13 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+# 2021.4.22
+
+### Features
+* **Redirect:** Append user query to redirect page, to support adding user ID
+to the Brand demo page link.
+
+
 # 2021.3.18-1
 
 ### Bug Fixes
