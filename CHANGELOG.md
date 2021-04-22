@@ -2,6 +2,14 @@
 
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
+
+# 2021.4.22-1
+
+### Features
+* **Brand:** Append user query to brand route, to support adding user ID
+to the Brand demo page link.
+
+
 # 2021.4.22
 
 ### Features
