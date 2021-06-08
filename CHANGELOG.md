@@ -3,6 +3,13 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2021.6.8
+
+### Features
+* **Demo Info:** Fix demo info getter route default address when MM_API_1 is not
+set.
+
+
 # 2021.4.22-1
 
 ### Features
