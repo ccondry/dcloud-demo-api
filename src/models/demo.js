@@ -4,9 +4,10 @@ const config = require('./configure')
 module.exports = {
   async get () {
     try {
+      const mmApi = process.env.MM_API_1 || 'https://mm.cxdemo.net'
       // get session.xml details in JSON
       const configuration = await config.get()
-      const url = `${process.env.MM_API_1}/api/v1/demo`
+      const url = `${mmApi}/api/v1/demo`
       const type = configuration.demo
       const version = configuration.version
       const instant = configuration.instant
