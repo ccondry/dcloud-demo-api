@@ -3,6 +3,9 @@ const request = require('request-promise-native')
 const session = require('./session')
 const cumulus = require('./cumulus')
 
+const mm1 = process.env.MM_API_1 || 'https://mm.cxdemo.net'
+const mm2 = process.env.MM_API_2 || 'https://mm-dev.cxdemo.net'
+
 const defaultConfiguration = {
   vertical: "finance"
 }
@@ -37,7 +40,7 @@ async function getConfig (userId) {
       // set timeout to 7 seconds so that secondary can be tried in a
       // reasonable amount of time
       options = {
-        baseUrl: process.env.MM_API_1,
+        baseUrl: mm1,
         url,
         json: true,
         timeout: 5000
@@ -62,10 +65,10 @@ async function getConfig (userId) {
       return r
     }
   } catch (e) {
-    console.log('failed to get session config from', process.env.MM_API_1, e.message)
+    console.log('failed to get session config from', mm1, e.message)
     try {
       // get session config from mm-dev
-      options.baseUrl = process.env.MM_API_2
+      options.baseUrl = mm2
       // set timeout to 30 seconds
       options.timeout = 30000
       const r2 = await request(options)
@@ -80,7 +83,7 @@ async function getConfig (userId) {
       }
       return r2
     } catch (e2) {
-      console.log('failed to get session config from', process.env.MM_API_2, e2.message)
+      console.log('failed to get session config from', mm2, e2.message)
       // failed both
       throw e2
     }
@@ -99,7 +102,7 @@ async function patchConfig (body) {
     const username = `v${json.vpod}user1`
     const basicAuth = Buffer.from(`${username}:${json.anycpwd}`).toString('base64')
     const options = {
-      baseUrl: process.env.MM_API_1,
+      baseUrl: mm1,
       method,
       url,
       headers: {
