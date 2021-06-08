@@ -24,6 +24,7 @@ module.exports = {
       // more than 1 demo
       const message = `found ${demos.length} base configurations for this demo, ${type} ${version} ${instant ? 'instant' : ''}`
       console.log(message)
+      // return the first object in the array
       return demos[0]
     } catch (e) {
       throw e
