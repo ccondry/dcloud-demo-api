@@ -16,6 +16,9 @@ async function getCcaiInfo (req, res) {
     // await Promise.resolve(tokens.cloudConnect.init)
     // get access token from cloud connect
     const token = tokens.cloudConnect.get()
+    if (!token) {
+      throw Error('No cloud connect token is available. Please enable Cloud Connect in demo-api .env file.')
+    }
     // get CCAI info from control hub
     const ret = await ccai.getConfig({
       id: callType.ccaiConfigID,
