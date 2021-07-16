@@ -3,6 +3,13 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2021.7.16
+
+### Features
+* **CCAI:** Return more descriptive error when CCAI fails due to token not
+existing (because cloud connect has not been enabled).
+
+
 # 2021.6.8-1
 
 ### Fixes
