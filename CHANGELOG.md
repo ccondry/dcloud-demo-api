@@ -3,6 +3,12 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2021.7.30
+
+### Features
+* **Short Link:** Log the response for create short link.
+
+
 # 2021.7.16
 
 ### Features
