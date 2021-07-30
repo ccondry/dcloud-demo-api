@@ -14,6 +14,7 @@ router.get('/', async (req, res, next) => {
       },
       json: true
     }, process.env.CS_MANAGER_API_1, process.env.CS_MANAGER_API_2)
+    console.log('created short link:', response)
     return res.status(200).send(response)
   } catch (e) {
     // failed
