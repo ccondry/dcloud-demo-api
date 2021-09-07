@@ -63,6 +63,8 @@ app.use('/api/v1/demo', require('./routes/demo'))
 app.use('/api/v1/cvp', require('./routes/cvp'))
 // request from CVP to look up CCAI name and description from control hub
 app.use('/api/v1/ccai', require('./routes/ccai'))
+// meta info
+app.use('/api/v1/version', require('./routes/version'))
 
 /*****************
 External Endpoints
