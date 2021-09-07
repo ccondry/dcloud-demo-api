@@ -3,6 +3,12 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2021.9.7
+
+### Features
+* **Version:** Add route to get version info.
+
+
 # 2021.7.30
 
 ### Features
