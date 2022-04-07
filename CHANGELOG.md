@@ -3,6 +3,12 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2022.4.7
+
+### Fixes
+* **CCAI:** Update URL and default org ID for CCAI.
+
+
 # 2021.9.7
 
 ### Features
