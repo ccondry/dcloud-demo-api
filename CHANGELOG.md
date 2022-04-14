@@ -3,6 +3,13 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2022.4.14
+
+### Fixes
+* **Configuration:** Remove mm-dev references to fix 500 errors on routes
+that reference it as a backup server.
+
+
 # 2022.4.7
 
 ### Fixes
