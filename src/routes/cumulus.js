@@ -9,7 +9,8 @@ router.get('/', async (req, res, next) => {
     const json = await session.get()
     // extract relevant data
     // determine if we should redirect to the secondary server or primary server
-    const host = req.query.dev === 'true' ? process.env.MM_API_2 : process.env.MM_API_1
+    // const host = req.query.dev === 'true' ? process.env.MM_API_2 : process.env.MM_API_1
+    const host = process.env.MM_API_1
     // construct the redirect URL
     let redirect = `${host}?session=${json.id}&datacenter=${json.datacenter}`
     // if PCCE, set the vertical config flag so that cumulus does not prompt for vertical selection

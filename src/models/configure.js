@@ -4,7 +4,7 @@ const session = require('./session')
 const cumulus = require('./cumulus')
 
 const mm1 = process.env.MM_API_1 || 'https://mm.cxdemo.net'
-const mm2 = process.env.MM_API_2 || 'https://mm-dev.cxdemo.net'
+// const mm2 = process.env.MM_API_2 || 'https://mm-dev.cxdemo.net'
 
 const defaultConfiguration = {
   vertical: "finance"
@@ -66,27 +66,27 @@ async function getConfig (userId) {
     }
   } catch (e) {
     console.log('failed to get session config from', mm1, e.message)
-    try {
-      // get session config from mm-dev
-      options.baseUrl = mm2
-      // set timeout to 30 seconds
-      options.timeout = 30000
-      const r2 = await request(options)
-      // if no configuration set for this session, fill in the default
-      if (!r2.configuration) {
-        r2.configuration = defaultConfiguration
-        if (r2.demo === 'pcce') {
-          r2.configuration.multichannel = 'ece'
-        } else if (r2.demo === 'uccx') {
-          // r.configuration.multichannel = 'uccx'
-        }
-      }
-      return r2
-    } catch (e2) {
-      console.log('failed to get session config from', mm2, e2.message)
-      // failed both
-      throw e2
-    }
+    // try {
+    //   // get session config from mm-dev
+    //   options.baseUrl = mm2
+    //   // set timeout to 30 seconds
+    //   options.timeout = 30000
+    //   const r2 = await request(options)
+    //   // if no configuration set for this session, fill in the default
+    //   if (!r2.configuration) {
+    //     r2.configuration = defaultConfiguration
+    //     if (r2.demo === 'pcce') {
+    //       r2.configuration.multichannel = 'ece'
+    //     } else if (r2.demo === 'uccx') {
+    //       // r.configuration.multichannel = 'uccx'
+    //     }
+    //   }
+    //   return r2
+    // } catch (e2) {
+    //   console.log('failed to get session config from', mm2, e2.message)
+    //   // failed both
+    //   throw e2
+    // }
   }
 }
 
