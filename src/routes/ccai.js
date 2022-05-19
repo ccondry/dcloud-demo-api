@@ -1,29 +1,33 @@
 const express = require('express')
 const router = express.Router()
-const tokens = require('../models/tokens')
-const cce = require('../models/cce')
-const ccai = require('../models/ccai')
+// const tokens = require('../models/tokens')
+// const cce = require('../models/cce')
+// const ccai = require('../models/ccai')
 
 // get cloud connect details for a given call type ID
 async function getCcaiInfo (req, res) {
   try {
     // get ID from URL parameter or URL query parameter
-    const id = req.params.id || req.query.id
+    // const id = req.params.id || req.query.id
     // console.log('get ccai info for call type ID', id)
     // get call type info from ID, from PCCE
-    const callType = await cce.get('callType', id)
+    // const callType = await cce.get('callType', id)
     // wait for initial cloud connect access token to be generated, if necessary
     // await Promise.resolve(tokens.cloudConnect.init)
     // get access token from cloud connect
-    const token = tokens.cloudConnect.get()
-    if (!token) {
-      throw Error('No cloud connect token is available. Please enable Cloud Connect in demo-api .env file.')
-    }
+    // const token = tokens.cloudConnect.get()
+    // if (!token) {
+    //   throw Error('No cloud connect token is available. Please enable Cloud Connect in demo-api .env file.')
+    // }
     // get CCAI info from control hub
-    const ret = await ccai.getConfig({
-      id: callType.ccaiConfigID,
-      token
-    })
+    // const ret = await ccai.getConfig({
+    //   id: callType.ccaiConfigID,
+    //   token
+    // })
+    const ret = {
+      name: 'CCAI',
+      description: 'Cisco Answers and Transcription'
+    }
     return res.status(200).send(ret)
   } catch (error) {
     console.log('failed to get CCAI call type info:', error)
