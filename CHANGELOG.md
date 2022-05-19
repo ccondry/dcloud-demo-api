@@ -3,6 +3,12 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2022.5.19
+
+### Fixes
+* **CCAI:** Disable CCAI token generation and just return static values.
+
+
 # 2022.4.14-1
 
 ### Fixes
