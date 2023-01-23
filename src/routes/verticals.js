@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
       return res.status(200).send(vertical)
     } else {
       // get verticals list
-      const verticals = await model.get()
+      const verticals = await model.get(req.query)
       return res.status(200).send(verticals)
     }
   } catch (e) {
