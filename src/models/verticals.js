@@ -1,4 +1,4 @@
-const fetch = require('./')
+const fetch = require('./fetch')
 
 function get (query) {
   return fetch(process.env.MM_API_1 + '/api/v1/verticals', {query})
