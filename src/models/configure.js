@@ -106,7 +106,7 @@ async function patchConfig (body) {
       },
       body
     }
-    
+    console.log('patchConfig', url, body)
     // patch session on mm and return results
     return fetch(url, options)
   } catch (e) {
