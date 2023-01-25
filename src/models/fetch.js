@@ -6,11 +6,18 @@ module.exports = async function (url, options = {}) {
   options.headers.Accept = options.headers.Accept || 'application/json'
   // set content type defaults for POST and PUT
   try {
-    if (['post', 'put'].includes(options.method.toLowerCase())) {
+    if (['post', 'put', 'patch'].includes(options.method.toLowerCase())) {
       options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json'
     }
   } catch (e) {
     // continue
+  }
+  // stringify JSON body
+  if (
+    options.headers['Content-Type'] === 'application/json' &&
+    typeof options.body === 'object'
+  ) {
+    options.body = JSON.stringify(options.body)
   }
   // add query to url
   let urlWithQuery = url
