@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fetch = require('./fetch')
 const request = require('request-promise-native')
 const session = require('./session')
 const cumulus = require('./cumulus')
@@ -94,27 +94,21 @@ async function patchConfig (body) {
   console.log('running: update dcloud session configuration')
   try {
     const json = await session.get()
-    // REST method
-    const method = 'PATCH'
     // url path
-    const url = `/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
+    const url = `${mm1}/api/v1/datacenters/${json.datacenter}/sessions/${json.id}`
     // basic auth is the anyconnect username and password for this dcloud session
     const username = `v${json.vpod}user1`
     const basicAuth = Buffer.from(`${username}:${json.anycpwd}`).toString('base64')
     const options = {
-      baseUrl: mm1,
-      method,
-      url,
+      method: 'PATCH',
       headers: {
         Authorization: 'Basic ' + basicAuth
       },
-      body,
-      json: true,
-      timeout: 5000
+      body
     }
-
+    
     // patch session on mm and return results
-    return request(options)
+    return fetch(url, options)
   } catch (e) {
     throw e
   }
@@ -132,18 +126,6 @@ async function updateConfig (data) {
     const message = 'Failed to update dCloud demo session configuration: ' + e.message
     console.error(message)
     throw Error(message)
-  } finally {
-    // also update in local database to prepare for future move away from mm
-    // holding the data
-    // save config in local cumulus database with empty string for user ID
-    // so that it matches when user Id is not set
-    cumulus.saveConfig('', data)
-    .then(r => {
-      console.log('Successfully saved cumulus config data for scheduled session.')
-    })
-    .catch(e => {
-      console.log('Failed to save cumulus config data for scheduled session:', e.message)
-    })
   }
 }
 
