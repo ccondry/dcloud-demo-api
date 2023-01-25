@@ -117,7 +117,8 @@ async function patchConfig (body) {
 async function updateConfig (data) {
   try {
     // try to update the config
-    await patchConfig(data)
+    const response = await patchConfig(data)
+    console.log('updateConfig response', response)
     
     // success
     return 'Successfully updated your dCloud demo configuration.'
