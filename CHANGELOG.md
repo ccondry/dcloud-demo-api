@@ -3,6 +3,13 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2023.1.31
+
+### Fixes
+* **Verticals:** Fix listing only system verticals, and searching for verticals
+by username.
+
+
 # 2022.5.19
 
 ### Fixes
