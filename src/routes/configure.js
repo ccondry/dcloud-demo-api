@@ -76,6 +76,9 @@ router.post('/', async (req, res, next) => {
   }
 
   // demo has CVA, user is logged in, and vertical is owned by a user?
+  console(demoBaseConfig.features)
+  console(req.headers.authorization)
+  console(vertical.owner)
   if (
     demoBaseConfig.features && 
     demoBaseConfig.features.includes('cva') && 
