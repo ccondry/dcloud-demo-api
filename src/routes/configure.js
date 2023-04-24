@@ -76,9 +76,9 @@ router.post('/', async (req, res, next) => {
   }
 
   // demo has CVA, user is logged in, and vertical is owned by a user?
-  console.log(demoBaseConfig.features)
-  console.log(req.headers.authorization)
-  console.log(vertical.owner)
+  console.log('demoBaseConfig: ', demoBaseConfig.features)
+  console.log('req.headers.authorization: ', req.headers.authorization)
+  console.log('vertical: ', vertical.owner)
   if (
     demoBaseConfig.features && 
     demoBaseConfig.features.includes('cva') && 
@@ -121,6 +121,8 @@ router.post('/', async (req, res, next) => {
     } catch (e) {
       console.log('failed to sync VVB CVA service accounts:', e.message)
     }
+  } else {
+    console.log('else for demo has CVA')
   }
   
   // done
