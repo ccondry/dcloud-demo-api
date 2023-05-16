@@ -77,21 +77,25 @@ router.post('/', async (req, res, next) => {
 
   // demo has CVA, user is logged in, and vertical is owned by a user?
   if (
+    // demo has CVA feature
     demoBaseConfig.features && 
     demoBaseConfig.features.includes('cva') && 
-    req.headers.authorization &&
-    req.headers.authorization.length > 20 &&
+    // and selected vertical is user-created
     vertical.owner &&
     vertical.owner !== '' &&
-    vertical.owner !== 'system'
+    vertical.owner !== 'system' &&
+    // and the GCP project ID is not the default one
+    vertical.gcpProjectId !== process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
   ) {
-    // provision ASR, TTS, NLU on PCCE
+    // provision ASR, TTS, NLU on PCCE using GCP credentials
     let key
     try {
       // get GCP key for this project ID from cumulus-api
-      // copy user JWT from headers to authorize the request
-      const token = req.headers.authorization.split(' ').pop()
-      key = await gcpCredential.get(vertical.gcpProjectId, token)
+      key = await gcpCredential.get({
+        projectId: vertical.gcpProjectId,
+        owner: vertical.owner,
+        privateKeyId: req.body.privateKeyId
+      })
     } catch (e) {
       const message = `failed to get Google Cloud credentials for vertical ${vertical.id}: ${e.message}`
       console.log(message)
