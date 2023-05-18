@@ -30,6 +30,10 @@ router.get('/', async (req, res, next) => {
 
 // update demo configuration on mm and mm-dev
 router.post('/', async (req, res, next) => {
+  // store private key ID and delete it from the body
+  const privateKeyId = req.body.privateKeyId
+  delete req.body.privateKeyId
+
   try {
     console.log('POST request to configure demo')
     // patch session on mm and mm-dev
@@ -97,7 +101,7 @@ router.post('/', async (req, res, next) => {
       key = await gcpCredential.get({
         projectId: vertical.gcpProjectId,
         owner: vertical.owner,
-        privateKeyId: req.body.privateKeyId
+        privateKeyId,
       })
     } catch (e) {
       const message = `failed to get Google Cloud credentials for vertical ${vertical.id}: ${e.message}`
