@@ -3,6 +3,12 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2023.5.19
+
+### Fixes
+* **Configuration:** Fix CVA provisioning using private key ID from user.
+
+
 # 2023.1.31
 
 ### Fixes
