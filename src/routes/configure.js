@@ -45,6 +45,7 @@ router.post('/', async (req, res, next) => {
     console.error(message)
     return res.status(500).send({message})
   }
+
   // get demo base config
   let demoBaseConfig
   try {
@@ -82,14 +83,15 @@ router.post('/', async (req, res, next) => {
   // demo has CVA, user is logged in, and vertical is owned by a user?
   if (
     // demo has CVA feature
-    demoBaseConfig.features && 
-    demoBaseConfig.features.includes('cva') && 
+    demoBaseConfig.features &&
+    demoBaseConfig.features.includes('cva') &&
     // and selected vertical is user-created
     vertical.owner &&
     vertical.owner !== '' &&
     vertical.owner !== 'system' &&
     // and the GCP project ID is not the default one
-    vertical.gcpProjectId !== process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
+    vertical.gcpProjectId &&
+    vertical.gcpProjectId !== 'cumulus-v2-hotikl'
   ) {
     console.log('custom branding selected with custom CVA')
     console.log('branding owner = ', vertical.owner)
