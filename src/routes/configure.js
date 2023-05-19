@@ -117,7 +117,7 @@ router.post('/', async (req, res, next) => {
     // create service account data object
     const serviceAccount = {
       name: vertical.gcpProjectId,
-      description: `vertical ${vertical.id}`,
+      description: `Branding ${vertical.id}`,
       key
     }
 
