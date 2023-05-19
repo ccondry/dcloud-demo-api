@@ -80,9 +80,6 @@ router.post('/', async (req, res, next) => {
   }
 
   // demo has CVA, user is logged in, and vertical is owned by a user?
-  console.log('demoBaseConfig: ', demoBaseConfig.features)
-  console.log('req.headers.authorization: ', req.headers.authorization)
-  console.log('vertical: ', vertical.owner)
   if (
     // demo has CVA feature
     demoBaseConfig.features && 
@@ -94,6 +91,9 @@ router.post('/', async (req, res, next) => {
     // and the GCP project ID is not the default one
     vertical.gcpProjectId !== process.env.DIALOGFLOW_DEFAULT_PROJECT_ID || 'cumulus-v2-hotikl'
   ) {
+    console.log('custom branding selected with custom CVA')
+    console.log('branding owner = ', vertical.owner)
+    console.log('gcpProjectId = ', vertical.gcpProjectId)
     // provision ASR, TTS, NLU on PCCE using GCP credentials
     let key
     try {
@@ -130,7 +130,7 @@ router.post('/', async (req, res, next) => {
       console.log('failed to sync VVB CVA service accounts:', e.message)
     }
   } else {
-    console.log('else for demo has CVA')
+    console.log('system branding selected or it does not include custom CVA')
   }
   
   // done
