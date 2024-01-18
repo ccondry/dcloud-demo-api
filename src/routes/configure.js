@@ -67,6 +67,8 @@ router.post('/', async (req, res, next) => {
     return res.status(500).send({message})
   }
 
+  let upstreamError
+
   // demo has upstream?
   if (demoBaseConfig.multichannel && demoBaseConfig.multichannel.includes('upstream')) {
     try {
@@ -74,9 +76,9 @@ router.post('/', async (req, res, next) => {
       await upstream.setVertical(vertical.name)
       console.log(`set Upstream vertical to ${vertical.name}`)
     } catch (e) {
-      const message = `failed to get demo base config for this demo: ${e.message}`
-      console.log(message)
-      return res.status(500).send({message})
+      upstreamError = `failed to set Upstream vertical: ${e.message}`
+      // console.log(message)
+      // return res.status(500).send({message})
     }
   }
 
@@ -136,7 +138,9 @@ router.post('/', async (req, res, next) => {
   }
   
   // done
-  return res.status(200).send()
+  return res.status(200).send({
+    upstreamError 
+  })
 })
 
 async function createServiceAccount (type, serviceAccount) {
