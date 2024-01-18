@@ -3,6 +3,13 @@
 Dates are in YYYY.MM.DD-X format, where X is revision number
 
 
+# 2024.1.18
+
+### Fixes
+* **Configuration:** If set vertical for Upstream fails, return status 200 with
+the error instead of 500.
+
+
 # 2023.5.19
 
 ### Fixes
